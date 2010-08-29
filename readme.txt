@@ -19,6 +19,22 @@ Currently in the following languages:
 
 If you have created your own language pack, or have an update of an existing one, you can send [gettext .po and .mo files](http://codex.wordpress.org/Translating_WordPress) to me so that I can bundle it into Multisite Global Search.
 
+**New features 1.1**
+
+* Insert search form in templates using the shortcode: `[multisite_search_result]`. [See the plugin page for more information](http://grial.usal.es/agora/pfcgrial/multisite-search).
+* Show excerpted results `[multisite_search_result excerpt="yes"]`
+
+**Features**
+
+* Multisite Global Search Widget. Show a search form in your sidebar.
+* Customizable results page URI.
+* Two different form types, vertical and horizontal.
+* Search across all network blogs or only in your blogs if you are logged.
+* Search results are showed in a page which contents the shortcode: `[multisite_search_result]`
+* Entries on every site across your installation appear in search results immediately after publication.
+* Receive results from your complete blog network, even sites you do not own or control.
+* Customizable style sheet for widget and results page.
+
 == Installation ==
 
 Installation is easy:
@@ -38,3 +54,12 @@ If you have any further questions, please submit them.
 1. Widget configuration.
 2. Vertical Global Search widget.
 3. Horizontal Global Search widget.
+
+== Changelog ==
+
+= V1.1 =
+* Added: shortcode for search form
+* Added: shortcode attribute that enable excerpted results
+* Added: new strings to translation files
+* Changed: order results
+* Fixed: style for results page

@@ -1,4 +1,4 @@
-# Translation of the WordPress plugin Multisite Global Search 1.0 by Alicia García Holgado.
+# Translation of the WordPress plugin Multisite Global Search 1.1 by Alicia García Holgado.
 # Copyright (C) 2010 Alicia García Holgado
 # This file is distributed under the same license as the Multisite Global Search package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2010.
@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Multisite Global Search 1.0\n"
+"Project-Id-Version: Multisite Global Search 1.1\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/multisite-global-search\n"
-"POT-Creation-Date: 2010-08-25 13:00+0200\n"
+"POT-Creation-Date: 2010-08-29 19:20+0200\n"
 "PO-Revision-Date: 2010-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,7 +20,7 @@ msgstr ""
 msgid "Global Search"
 msgstr ""
 
-#: multisite-global-search.php:60
+#: multisite-global-search.php:60 multisite-global-search.php:422
 msgid "globalsearch"
 msgstr ""
 
@@ -45,96 +45,106 @@ msgid "Vertical"
 msgstr ""
 
 #: multisite-global-search.php:129 multisite-global-search.php:146
+#: multisite-global-search.php:428 multisite-global-search.php:440
 msgid "Search across all blogs:"
 msgstr ""
 
 #: multisite-global-search.php:131 multisite-global-search.php:148
+#: multisite-global-search.php:430 multisite-global-search.php:442
 msgid "Search"
 msgstr ""
 
-#: multisite-global-search.php:134 multisite-global-search.php:151
+#: multisite-global-search.php:134 multisite-global-search.php:150
+#: multisite-global-search.php:432 multisite-global-search.php:445
 msgid "Search on all blogs"
 msgstr ""
 
-#: multisite-global-search.php:134 multisite-global-search.php:151
+#: multisite-global-search.php:134 multisite-global-search.php:150
+#: multisite-global-search.php:432 multisite-global-search.php:445
 msgid "All"
 msgstr ""
 
-#: multisite-global-search.php:135 multisite-global-search.php:152
+#: multisite-global-search.php:135 multisite-global-search.php:151
+#: multisite-global-search.php:433 multisite-global-search.php:446
 msgid "Search only on your blogs"
 msgstr ""
 
-#: multisite-global-search.php:135 multisite-global-search.php:152
+#: multisite-global-search.php:135 multisite-global-search.php:151
+#: multisite-global-search.php:433 multisite-global-search.php:446
 msgid "My blogs"
 msgstr ""
 
-#: multisite-global-search.php:202
+#: multisite-global-search.php:200 multisite-global-search.php:215
 msgid ""
 "This post is password protected. To view it please enter your password below:"
 msgstr ""
 
-#: multisite-global-search.php:203
+#: multisite-global-search.php:201 multisite-global-search.php:216
 msgid "Password"
 msgstr ""
 
-#: multisite-global-search.php:203
+#: multisite-global-search.php:201 multisite-global-search.php:216
 msgid "Submit"
 msgstr ""
 
-#: multisite-global-search.php:250
+#: multisite-global-search.php:235
+msgid "(Read more)"
+msgstr ""
+
+#: multisite-global-search.php:286
 msgid "Edit post"
 msgstr ""
 
-#: multisite-global-search.php:250
+#: multisite-global-search.php:286
 msgid "Edit"
 msgstr ""
 
-#: multisite-global-search.php:260
+#: multisite-global-search.php:296
 msgid "Comments off"
 msgstr ""
 
-#: multisite-global-search.php:265
+#: multisite-global-search.php:301
 msgid "Enter your password to view comments"
 msgstr ""
 
-#: multisite-global-search.php:292
+#: multisite-global-search.php:328
 #, php-format
 msgid "Comment on %s"
 msgstr ""
 
-#: multisite-global-search.php:294
+#: multisite-global-search.php:330
 msgid "% Comments"
 msgstr ""
 
-#: multisite-global-search.php:296
+#: multisite-global-search.php:332
 msgid "No Comments"
 msgstr ""
 
-#: multisite-global-search.php:298
+#: multisite-global-search.php:334
 msgid "1 Comment"
 msgstr ""
 
-#: multisite-global-search.php:333 multisite-global-search.php:370
+#: multisite-global-search.php:371 multisite-global-search.php:412
 msgid "Not found"
 msgstr ""
 
-#: multisite-global-search.php:333 multisite-global-search.php:337
+#: multisite-global-search.php:371 multisite-global-search.php:375
 msgid "in your blogs"
 msgstr ""
 
-#: multisite-global-search.php:334 multisite-global-search.php:371
+#: multisite-global-search.php:372 multisite-global-search.php:413
 msgid "Sorry, but you are looking for something that isn't here."
 msgstr ""
 
-#: multisite-global-search.php:337
+#: multisite-global-search.php:375
 msgid "matches with"
 msgstr ""
 
-#: multisite-global-search.php:351
+#: multisite-global-search.php:389
 msgid "Permanent Link to"
 msgstr ""
 
-#: multisite-global-search.php:354
+#: multisite-global-search.php:392
 msgid "j/m/y, G:i"
 msgstr ""
 
@@ -148,7 +158,7 @@ msgstr ""
 
 #. Description of the plugin/theme
 msgid ""
-"Adds the ability to search through blogs into your WordPress 3.0 Multisite "
+"Adds the ability to search through blogs into your WordPress Multisite "
 "installation. Based on my other plugin WPMU GLobal Search."
 msgstr ""
 

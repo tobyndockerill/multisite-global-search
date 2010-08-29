@@ -40,7 +40,8 @@
 /* Results */
 .globalsearch_post {
 	clear: both;
-    padding-bottom: 15px;
+	padding-top: 6px;
+    padding-bottom: 9px;
     margin-bottom: 10px;
 } 
 
@@ -72,12 +73,13 @@
 
 .globalsearch_comment {
     float: right;
+	line-height: 12px;
     background-position: left -58px;
     margin-right: 0 !important;
+	margin-top: 4px;
 }
 
 .globalsearch_date {
-    float: left;
     text-align: center;
     margin-right: 6px;
     margin-top: 0px;
