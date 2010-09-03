@@ -1,6 +1,6 @@
 === Multisite Global Search ===
 Contributors: aliciagh
-Tags: search, multisite, widget, multilingual, global, shortcode
+Tags: search, multisite, buddypress, widget, multilingual, global, shortcode
 Requires at least: 3.0
 Tested up to: 3.0.1
 Stable tag: trunk 
