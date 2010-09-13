@@ -3,7 +3,7 @@
  * Plugin Name: Multisite Global Search
  * Plugin URI: http://grial.usal.es/agora/pfcgrial/multisite-search
  * Description: Adds the ability to search through blogs into your WordPress Multisite installation. Based on my other plugin WPMU GLobal Search.
- * Version: 1.1
+ * Version: 1.2
  * Requires at least: WordPress 3.0
  * Tested up to: WordPress 3.0.1
  * Author: Alicia García Holgado
@@ -28,7 +28,30 @@ Network: true
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
+if ( !defined( 'MULTISITE' ) || MULTISITE == false ) {
+	add_action( 'admin_notices', 'ms_global_search_install_multisite_notice' );
+	return;
+}
+
+function ms_global_search_install_multisite_notice() {
+	echo '<div id="message" class="error fade"><p>';
+	_e('<strong>Multisite Global Search</strong></a> requires multisite installation. Please <a href="http://codex.wordpress.org/Create_A_Network">create a network</a> first, or <a href="plugins.php">deactivate Multisite Global Search</a>.', 'ms-global-search' );
+	echo '</p></div>';
+}
+
 load_plugin_textdomain( 'ms-global-search', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+
+$option = get_option( 'permalink_structure' );
+if ( empty ( $option ) ) {
+	add_action( 'admin_notices', 'ms_global_search_active_widget_notice' );
+	return;
+}
+
+function ms_global_search_active_widget_notice() {
+	echo '<div id="message" class="error fade"><p>';
+	_e( '<strong>Multisite Global Search Widget</strong></a> not support default permalinks. Please <a target="_blank" href="options-permalink.php">Change Permalinks</a> first.', 'ms-global-search' );
+	echo '</p></div>';
+}
 
 /**
  * Widget definition.
@@ -41,7 +64,7 @@ if( !class_exists( 'Multisite_Global_Search' ) ) {
 		/**
 		 * Widget actual processes.
 		 */
-		function Multisite_Global_Search(  ) {
+		function Multisite_Global_Search() {
 			/* Widget settings. */
 			$widget_ops = array( 'classname' => 'ms-global-search', 'description' => 'Adds the ability to search through blogs into your WordPress 3.0 Multisite installation. Based on my other plugin WPMU GLobal Search.' );
 	
@@ -123,7 +146,7 @@ if( !class_exists( 'Multisite_Global_Search' ) ) {
 		}
 		
 		function ms_global_search_vertical_form( $page ) {
-			$rand = rand(  ); ?>
+			$rand = rand(); ?>
 			<form class="ms-global-search_form" method="get" action="<?php echo get_bloginfo( 'url' ).'/'.$page.'/'; ?>">
 				<div>
 				    <p><?php _e( 'Search across all blogs:', 'ms-global-search' ) ?></p>
@@ -140,7 +163,7 @@ if( !class_exists( 'Multisite_Global_Search' ) ) {
 		}
 		
 		function ms_global_search_horizontal_form( $page ) {
-			$rand = rand(  ); ?>
+			$rand = rand(); ?>
 		    <form class="ms-global-search_form" method="get" action="<?php echo get_bloginfo( 'url' ).'/'.$page.'/'; ?>">
 			    <div>
 				    <span><?php _e( 'Search across all blogs:', 'ms-global-search' ) ?>&nbsp;</span>
@@ -160,14 +183,14 @@ if( !class_exists( 'Multisite_Global_Search' ) ) {
  * Register the Widget.
  */
 add_action( 'widgets_init', 'ms_global_search_register' );
-function ms_global_search_register(  ) {
+function ms_global_search_register() {
 	register_widget( 'Multisite_Global_Search' );
 }
 
 /**
  * Add style file if it exists.
  */
-function ms_global_search_style(  ) {
+function ms_global_search_style() {
 	$styleurl = WP_PLUGIN_URL."/".basename( dirname( __FILE__ ) )."/style.css";
 	$styledir = WP_PLUGIN_DIR."/".basename( dirname( __FILE__ ) )."/style.css";
 	
@@ -297,7 +320,7 @@ function ms_global_search_get_comments_link( $s, $css_class = '' ) {
 		return;
 	}
 
-	if ( post_password_required(  ) ) {
+	if ( post_password_required() ) {
 		echo __( 'Enter your password to view comments', 'ms-global-search' );
 		return;
 	}
@@ -310,7 +333,7 @@ function ms_global_search_get_comments_link( $s, $css_class = '' ) {
 			$home = get_blog_option( $s->blog_id, 'siteurl' );
 		echo $home . '/' . $wpcommentspopupfile . '?comments_popup=' . $s->ID;
 		echo '" onclick="wpopen( this.href ); return false"';
-	} else { // if comments_popup_script(  ) is not in the template, display simple comment link
+	} else { // if comments_popup_script() is not in the template, display simple comment link
 		if ( 0 == $number )
 			echo get_blog_permalink( $s->blog_id, $s->ID ) . '#respond';
 		else
@@ -347,7 +370,7 @@ function ms_global_search_page( $atts ) {
 	if( !empty( $term ) ) {
 		$wheresearch = '';
 		/* Search only on user blogs. */
-		$userid = get_current_user_id(  );
+		$userid = get_current_user_id();
 		if( strcmp( apply_filters ( 'get_search_query', get_query_var( 'mswhere' ) ), 'my' ) == 0 && $userid != 0 ) {
 			$userblogs = get_blogs_of_user( $userid );
 			
@@ -421,7 +444,7 @@ function ms_global_search_form( $atts ) {
 	
 	extract( shortcode_atts( array( 'type' => 'vertical', 'page' => __( 'globalsearch', 'ms-global-search' ) ), $atts ) );
 	
-	$rand = rand(  );
+	$rand = rand();
 	if( strcmp( $type, 'horizontal' ) == 0 ) { ?>
 		<form class="ms-global-search_form" method="get" action="<?php echo get_bloginfo( 'url' ).'/'.$page.'/'; ?>">
 		    <div>
@@ -475,7 +498,7 @@ if( !function_exists( 'ms_global_search_build_views_drop' ) ) {
 }
 
 if( !function_exists( 'ms_global_search_build_views_add' ) ) {
-	function ms_global_search_build_views_add(  ) {
+	function ms_global_search_build_views_add() {
 	    global $wpdb;
 	
 	    $blogs = $wpdb->get_results( $wpdb->prepare( "SELECT blog_id, domain, path FROM {$wpdb->blogs} WHERE site_id = {$wpdb->siteid} AND public = '1' AND archived = '0' AND mature = '0' AND spam = '0' AND deleted = '0' ORDER BY registered DESC" ) );
@@ -517,7 +540,7 @@ if( !function_exists( 'ms_global_search_v_query' ) ) {
 	            $comments_select_query .= ' UNION ';
 	        }
 	        
-	        if( $blog->blog_id == 1 ) {
+	        if( $blog->blog_id == BLOG_ID_CURRENT_SITE ) {
 	        	$posts_select_query    .= " ( SELECT '{$blog->blog_id}' AS blog_id, '{$blog->domain}' AS domain, '{$blog->path}' AS path, posts{$blog->blog_id}.* FROM {$wpdb->base_prefix}posts posts{$blog->blog_id} WHERE posts{$blog->blog_id}.post_type != 'revision' AND posts{$blog->blog_id}.post_status = 'publish' ) ";
 	        	$postmeta_select_query .= " ( SELECT '{$blog->blog_id}' AS blog_id, '{$blog->domain}' AS domain, '{$blog->path}' AS path, postmeta{$blog->blog_id}.* FROM {$wpdb->base_prefix}postmeta postmeta{$blog->blog_id} ) ";
 	        	$comments_select_query .= " ( SELECT '{$blog->blog_id}' AS blog_id, '{$blog->domain}' AS domain, '{$blog->path}' AS path, comments{$blog->blog_id}.* FROM {$wpdb->base_prefix}comments comments{$blog->blog_id} ) ";	
@@ -529,14 +552,25 @@ if( !function_exists( 'ms_global_search_v_query' ) ) {
 	        $i++;
 	    }
 	    
-	    $v_query1  = "CREATE OR REPLACE VIEW `{$wpdb->base_prefix}v_posts` AS ".$posts_select_query;
-		$wpdb->query( $wpdb->prepare( $v_query1 ) );
-		
-		$v_query2  = "CREATE OR REPLACE VIEW `{$wpdb->base_prefix}v_postmeta` AS ".$postmeta_select_query;
-		$wpdb->query( $wpdb->prepare( $v_query2 ) );
-		
-		$v_query3  = "CREATE OR REPLACE VIEW `{$wpdb->base_prefix}v_comments` AS ".$comments_select_query;
-		$wpdb->query( $wpdb->prepare( $v_query3 ) );
+	
+	    if( $blogs != null ) {
+		    $v_query1  = "CREATE OR REPLACE VIEW `{$wpdb->base_prefix}v_posts` AS ".$posts_select_query;
+			if ( $wpdb->query( $wpdb->prepare( $v_query1 ) ) == false ) {
+				wp_die( __( 'Error creating search views in the database. <a href="plugins.php">Deactivate Multisite Global Search</a> and check you have create views privilege in your WordPress database.', 'ms-global-search' ) );
+			}
+			
+			$v_query2  = "CREATE OR REPLACE VIEW `{$wpdb->base_prefix}v_postmeta` AS ".$postmeta_select_query;
+			if ( $wpdb->query( $wpdb->prepare( $v_query2 ) ) == false ) {
+				wp_die( __( 'Error creating search views in the database. <a href="plugins.php">Deactivate Multisite Global Search</a> and check you have create views privilege in your WordPress database.', 'ms-global-search' ) );
+			}
+			
+			$v_query3  = "CREATE OR REPLACE VIEW `{$wpdb->base_prefix}v_comments` AS ".$comments_select_query;
+			if ( $wpdb->query( $wpdb->prepare( $v_query3 ) ) == false ) {
+				wp_die( __( 'Error creating search views in the database. <a href="plugins.php">Deactivate Multisite Global Search</a> and check you have create views privilege in your WordPress database.', 'ms-global-search' ) );
+			}
+	    } else {
+	    	wp_die( __( '<strong>Multisite Global Search</strong></a> requires multisite installation. Please <a href="http://codex.wordpress.org/Create_A_Network">create a network</a> first, or <a href="plugins.php">deactivate Multisite Global Search</a>.', 'ms-global-search' ) );
+	    }
 	}
 }
 
