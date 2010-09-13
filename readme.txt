@@ -20,6 +20,7 @@ Currently in the following languages:
 If you have created your own language pack, or have an update of an existing one, you can send [gettext .po and .mo files](http://codex.wordpress.org/Translating_WordPress) to me so that I can bundle it into Multisite Global Search.
 
 **New features 1.2**
+
 * Check plugin requeriments.
 * Fixed some bugs.
 * Added error messages.
