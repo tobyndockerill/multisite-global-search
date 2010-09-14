@@ -3,7 +3,7 @@
  * Plugin Name: Multisite Global Search
  * Plugin URI: http://grial.usal.es/agora/pfcgrial/multisite-search
  * Description: Adds the ability to search through blogs into your WordPress Multisite installation. Based on my other plugin WPMU GLobal Search.
- * Version: 1.2
+ * Version: 1.2.1
  * Requires at least: WordPress 3.0
  * Tested up to: WordPress 3.0.1
  * Author: Alicia García Holgado
@@ -555,17 +555,20 @@ if( !function_exists( 'ms_global_search_v_query' ) ) {
 	
 	    if( $blogs != null ) {
 		    $v_query1  = "CREATE OR REPLACE VIEW `{$wpdb->base_prefix}v_posts` AS ".$posts_select_query;
-			if ( $wpdb->query( $wpdb->prepare( $v_query1 ) ) == false ) {
+			if ( $wpdb->query( $wpdb->prepare( $v_query1 ) ) === false ) {
+				$wpdb->print_error();
 				wp_die( __( 'Error creating search views in the database. <a href="plugins.php">Deactivate Multisite Global Search</a> and check you have create views privilege in your WordPress database.', 'ms-global-search' ) );
 			}
 			
 			$v_query2  = "CREATE OR REPLACE VIEW `{$wpdb->base_prefix}v_postmeta` AS ".$postmeta_select_query;
-			if ( $wpdb->query( $wpdb->prepare( $v_query2 ) ) == false ) {
+			if ( $wpdb->query( $wpdb->prepare( $v_query2 ) ) === false ) {
+				$wpdb->print_error();
 				wp_die( __( 'Error creating search views in the database. <a href="plugins.php">Deactivate Multisite Global Search</a> and check you have create views privilege in your WordPress database.', 'ms-global-search' ) );
 			}
 			
 			$v_query3  = "CREATE OR REPLACE VIEW `{$wpdb->base_prefix}v_comments` AS ".$comments_select_query;
-			if ( $wpdb->query( $wpdb->prepare( $v_query3 ) ) == false ) {
+			if ( $wpdb->query( $wpdb->prepare( $v_query3 ) ) === false ) {
+				$wpdb->print_error();
 				wp_die( __( 'Error creating search views in the database. <a href="plugins.php">Deactivate Multisite Global Search</a> and check you have create views privilege in your WordPress database.', 'ms-global-search' ) );
 			}
 	    } else {

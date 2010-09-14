@@ -1,14 +1,14 @@
-# Translation of the WordPress plugin Multisite Global Search 1.1 by Alicia García Holgado.
+# Translation of the WordPress plugin Multisite Global Search 1.2.1 by Alicia García Holgado.
 # Copyright (C) 2010 Alicia García Holgado
 # This file is distributed under the same license as the Multisite Global Search package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2010.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Multisite Global Search 1.1\n"
+"Project-Id-Version: Multisite Global Search 1.2.1\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/multisite-global-search\n"
-"POT-Creation-Date: 2010-08-29 19:20+0200\n"
-"PO-Revision-Date: 2010-08-29 19:50+0100\n"
+"POT-Creation-Date: 2010-09-14 06:57+0200\n"
+"PO-Revision-Date: 2010-09-14 07:07+0100\n"
 "Last-Translator: Alicia García Holgado <alicia.alicia1986gh@gmail.com>\n"
 "Language-Team: Alicia García Holgado <aliciagh@usal.es>\n"
 "MIME-Version: 1.0\n"
@@ -18,156 +18,171 @@ msgstr ""
 "X-Poedit-Country: SPAIN\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
-#: multisite-global-search.php:52
-#: multisite-global-search.php:60
-msgid "Global Search"
-msgstr "Búsqueda Global"
+#: multisite-global-search.php:38
+#: multisite-global-search.php:575
+msgid "<strong>Multisite Global Search</strong></a> requires multisite installation. Please <a href=\"http://codex.wordpress.org/Create_A_Network\">create a network</a> first, or <a href=\"plugins.php\">deactivate Multisite Global Search</a>."
+msgstr "<strong>Multisite Global Search</strong></a> requiere que la instalación sea multisite. Por favor <a href=\"http://codex.wordpress.org/Create_A_Network\">crea una red</a> primero, o <a href=\"plugins.php\">desactiva Multisite Global Search</a>."
 
-#: multisite-global-search.php:60
-#: multisite-global-search.php:422
+#: multisite-global-search.php:52
+msgid "<strong>Multisite Global Search Widget</strong></a> not support default permalinks. Please <a target=\"_blank\" href=\"options-permalink.php\">Change Permalinks</a> first."
+msgstr "<strong>Multisite Global Search Widget</strong></a> no soporta los permalinks por defecto. Por favor <a target=\"_blank\" href=\"options-permalink.php\">Cambia los Permalinks</a> primero."
+
+#: multisite-global-search.php:75
+#: multisite-global-search.php:83
+msgid "Global Search"
+msgstr "Global Search"
+
+#: multisite-global-search.php:83
+#: multisite-global-search.php:445
 msgid "globalsearch"
 msgstr "globalsearch"
 
-#: multisite-global-search.php:64
+#: multisite-global-search.php:87
 msgid "Title"
 msgstr "Título"
 
-#: multisite-global-search.php:69
+#: multisite-global-search.php:92
 msgid "Page"
 msgstr "Página"
 
-#: multisite-global-search.php:74
+#: multisite-global-search.php:97
 msgid "Form"
-msgstr "Form"
+msgstr "Formulario"
 
-#: multisite-global-search.php:76
+#: multisite-global-search.php:99
 msgid "Horizontal"
 msgstr "Horizontal"
 
-#: multisite-global-search.php:78
+#: multisite-global-search.php:101
 msgid "Vertical"
 msgstr "Vertical"
 
-#: multisite-global-search.php:129
-#: multisite-global-search.php:146
-#: multisite-global-search.php:428
-#: multisite-global-search.php:440
+#: multisite-global-search.php:152
+#: multisite-global-search.php:169
+#: multisite-global-search.php:451
+#: multisite-global-search.php:463
 msgid "Search across all blogs:"
 msgstr "Buscar en todos los blogs:"
 
-#: multisite-global-search.php:131
-#: multisite-global-search.php:148
-#: multisite-global-search.php:430
-#: multisite-global-search.php:442
+#: multisite-global-search.php:154
+#: multisite-global-search.php:171
+#: multisite-global-search.php:453
+#: multisite-global-search.php:465
 msgid "Search"
 msgstr "Buscar"
 
-#: multisite-global-search.php:134
-#: multisite-global-search.php:150
-#: multisite-global-search.php:432
-#: multisite-global-search.php:445
+#: multisite-global-search.php:157
+#: multisite-global-search.php:173
+#: multisite-global-search.php:455
+#: multisite-global-search.php:468
 msgid "Search on all blogs"
 msgstr "Buscar en todos los blogs"
 
-#: multisite-global-search.php:134
-#: multisite-global-search.php:150
-#: multisite-global-search.php:432
-#: multisite-global-search.php:445
+#: multisite-global-search.php:157
+#: multisite-global-search.php:173
+#: multisite-global-search.php:455
+#: multisite-global-search.php:468
 msgid "All"
 msgstr "Todo"
 
-#: multisite-global-search.php:135
-#: multisite-global-search.php:151
-#: multisite-global-search.php:433
-#: multisite-global-search.php:446
+#: multisite-global-search.php:158
+#: multisite-global-search.php:174
+#: multisite-global-search.php:456
+#: multisite-global-search.php:469
 msgid "Search only on your blogs"
 msgstr "Buscar sólo en tus blogs"
 
-#: multisite-global-search.php:135
-#: multisite-global-search.php:151
-#: multisite-global-search.php:433
-#: multisite-global-search.php:446
+#: multisite-global-search.php:158
+#: multisite-global-search.php:174
+#: multisite-global-search.php:456
+#: multisite-global-search.php:469
 msgid "My blogs"
 msgstr "Mis blogs"
 
-#: multisite-global-search.php:200
-#: multisite-global-search.php:215
+#: multisite-global-search.php:223
+#: multisite-global-search.php:238
 msgid "This post is password protected. To view it please enter your password below:"
 msgstr "Este post está protegido con contraseña. Para verlo debes introducirla aquí:"
 
-#: multisite-global-search.php:201
-#: multisite-global-search.php:216
+#: multisite-global-search.php:224
+#: multisite-global-search.php:239
 msgid "Password"
 msgstr "Contraseña"
 
-#: multisite-global-search.php:201
-#: multisite-global-search.php:216
+#: multisite-global-search.php:224
+#: multisite-global-search.php:239
 msgid "Submit"
 msgstr "Enviar"
 
-#: multisite-global-search.php:235
+#: multisite-global-search.php:258
 msgid "(Read more)"
 msgstr "(Leer más)"
 
-#: multisite-global-search.php:286
+#: multisite-global-search.php:309
 msgid "Edit post"
 msgstr "Editar post"
 
-#: multisite-global-search.php:286
+#: multisite-global-search.php:309
 msgid "Edit"
 msgstr "Editar"
 
-#: multisite-global-search.php:296
+#: multisite-global-search.php:319
 msgid "Comments off"
 msgstr "Comentarios desactivados"
 
-#: multisite-global-search.php:301
+#: multisite-global-search.php:324
 msgid "Enter your password to view comments"
 msgstr "Introduce tu contraseña para ver los comentarios"
 
-#: multisite-global-search.php:328
+#: multisite-global-search.php:351
 #, php-format
 msgid "Comment on %s"
 msgstr "Comentarios en %s"
 
-#: multisite-global-search.php:330
+#: multisite-global-search.php:353
 msgid "% Comments"
 msgstr "% Comentarios"
 
-#: multisite-global-search.php:332
+#: multisite-global-search.php:355
 msgid "No Comments"
 msgstr "Sin Comentarios"
 
-#: multisite-global-search.php:334
+#: multisite-global-search.php:357
 msgid "1 Comment"
 msgstr "1 Comentario"
 
-#: multisite-global-search.php:371
-#: multisite-global-search.php:412
+#: multisite-global-search.php:394
+#: multisite-global-search.php:435
 msgid "Not found"
 msgstr "No encontrado"
 
-#: multisite-global-search.php:371
-#: multisite-global-search.php:375
+#: multisite-global-search.php:394
+#: multisite-global-search.php:398
 msgid "in your blogs"
 msgstr "en tus blogs"
 
-#: multisite-global-search.php:372
-#: multisite-global-search.php:413
+#: multisite-global-search.php:395
+#: multisite-global-search.php:436
 msgid "Sorry, but you are looking for something that isn't here."
 msgstr "Lo sentimos pero no se han encontrado coincidencias."
 
-#: multisite-global-search.php:375
+#: multisite-global-search.php:398
 msgid "matches with"
-msgstr "coincidencias con "
+msgstr "coincidencias con"
 
-#: multisite-global-search.php:389
+#: multisite-global-search.php:412
 msgid "Permanent Link to"
 msgstr "Enlace permanente a"
 
-#: multisite-global-search.php:392
+#: multisite-global-search.php:415
 msgid "j/m/y, G:i"
 msgstr "j/m/y, G:i"
+
+#: multisite-global-search.php:560
+#: multisite-global-search.php:566
+#: multisite-global-search.php:572
+msgid "Error creating search views in the database. <a href=\"plugins.php\">Deactivate Multisite Global Search</a> and check you have create views privilege in your WordPress database."
+msgstr "Error creando las vistas en la base de datos. <a href=\"plugins.php\">Desactiva Multisite Global Search</a> y comprueba que tienes permiso de creación de vistas en tu base de datos de WordPress."
 
 #. Plugin Name of the plugin/theme
 msgid "Multisite Global Search"
