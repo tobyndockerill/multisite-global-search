@@ -509,6 +509,7 @@ add_action ( 'activate_blog', 'ms_global_search_build_views_activate', 10, 1 );
 add_action ( 'deactivate_blog', 'ms_global_search_build_views_drop', 10, 1 );
 
 register_activation_hook( __FILE__, 'ms_global_search_build_views_add' );
+register_deactivation_hook( __FILE__, 'ms_global_search_drop_views');
 
 if( !function_exists( 'ms_global_search_build_views_drop' ) ) {
 	function ms_global_search_build_views_drop( $trigger ) {
@@ -591,6 +592,16 @@ if( !function_exists( 'ms_global_search_v_query' ) ) {
 	    } else {
 	    	wp_die( __( '<strong>Multisite Global Search</strong></a> requires multisite installation. Please <a href="http://codex.wordpress.org/Create_A_Network">create a network</a> first, or <a href="plugins.php">deactivate Multisite Global Search</a>.', 'ms-global-search' ) );
 	    }
+	}
+}
+
+if( !function_exists( 'ms_global_search_drop_views' ) ) {
+	function ms_global_search_drop_views() {
+		global $wpdb;
+		
+		$wpdb->query( $wpdb->prepare( "DROP VIEW `{$wpdb->base_prefix}v_posts`" ) );
+		$wpdb->query( $wpdb->prepare( "DROP VIEW `{$wpdb->base_prefix}v_postmeta`" ) );
+		$wpdb->query( $wpdb->prepare( "DROP VIEW `{$wpdb->base_prefix}v_comments`" ) );
 	}
 }
 

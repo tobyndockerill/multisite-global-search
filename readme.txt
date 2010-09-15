@@ -72,7 +72,10 @@ Insert search form in templates using the shortcode: `[multisite_search_form]`
 3. Horizontal Global Search widget.
 
 == Changelog ==
+
+= 1.2.2 =
 * Fixed: Fatal error redeclared functions
+* Added: deactivation hook
 
 = 1.2.1 =
 * Fixed: database prefix problem
