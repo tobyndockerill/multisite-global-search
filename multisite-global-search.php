@@ -150,6 +150,9 @@ if( !class_exists( 'Multisite_Global_Search' ) ) {
 		}
 		
 		function ms_global_search_vertical_form( $page ) {
+			if( isset( $this ) ) $id_base = $this->id_base;
+			else $id_base = 'ms-global-search';
+			
 			$rand = rand(); ?>
 			<form class="ms-global-search_form" method="get" action="<?php echo get_bloginfo( 'url' ).'/'.$page.'/'; ?>">
 				<div>
@@ -158,8 +161,8 @@ if( !class_exists( 'Multisite_Global_Search' ) ) {
 				    <input type="submit" class="button" value="<?php _e( 'Search', 'ms-global-search' )?>" tabindex="2" />
 				    
 				    <p>
-				    	<input title="<?php _e( 'Search on all blogs', 'ms-global-search' ); ?>" type="radio" id="<?php echo $this->id_base.'_'.$rand ?>" name="mswhere" value="all" checked='checked'><?php _e( 'All', 'ms-global-search' ); ?>
-						<input title="<?php _e( 'Search only on your blogs', 'ms-global-search' ); ?>" type="radio" id="<?php echo $this->id_base.'_'.$rand ?>" name="mswhere" value="my"><?php _e( 'My blogs', 'ms-global-search' ); ?>
+				    	<input title="<?php _e( 'Search on all blogs', 'ms-global-search' ); ?>" type="radio" id="<?php echo $id_base.'_'.$rand ?>" name="mswhere" value="all" checked='checked'><?php _e( 'All', 'ms-global-search' ); ?>
+						<input title="<?php _e( 'Search only on your blogs', 'ms-global-search' ); ?>" type="radio" id="<?php echo $id_base.'_'.$rand ?>" name="mswhere" value="my"><?php _e( 'My blogs', 'ms-global-search' ); ?>
 				    </p>
 			    </div>
 		    </form>
@@ -167,6 +170,9 @@ if( !class_exists( 'Multisite_Global_Search' ) ) {
 		}
 		
 		function ms_global_search_horizontal_form( $page ) {
+			if( isset( $this ) ) $id_base = $this->id_base;
+			else $id_base = 'ms-global-search';
+			
 			$rand = rand(); ?>
 		    <form class="ms-global-search_form" method="get" action="<?php echo get_bloginfo( 'url' ).'/'.$page.'/'; ?>">
 			    <div>
@@ -174,8 +180,8 @@ if( !class_exists( 'Multisite_Global_Search' ) ) {
 				    <input class="ms-global-search_hbox" name="mssearch" type="text" value="" size="16" tabindex="1" />
 				    <input type="submit" class="button" value="<?php _e( 'Search', 'ms-global-search' ) ?>" tabindex="2" />
 
-				    <input title="<?php _e( 'Search on all blogs', 'ms-global-search' ); ?>" type="radio" id="<?php echo $this->id_base.'_'.$rand ?>" name="mswhere" value="all" checked='checked'><?php _e( 'All', 'ms-global-search' ); ?>
-					<input title="<?php _e( 'Search only on your blogs', 'ms-global-search' ); ?>" type="radio" id="<?php echo $this->id_base.'_'.$rand ?>" name="mswhere" value="my"><?php _e( 'My blogs', 'ms-global-search' ); ?>
+				    <input title="<?php _e( 'Search on all blogs', 'ms-global-search' ); ?>" type="radio" id="<?php echo $id_base.'_'.$rand ?>" name="mswhere" value="all" checked='checked'><?php _e( 'All', 'ms-global-search' ); ?>
+					<input title="<?php _e( 'Search only on your blogs', 'ms-global-search' ); ?>" type="radio" id="<?php echo $id_base.'_'.$rand ?>" name="mswhere" value="my"><?php _e( 'My blogs', 'ms-global-search' ); ?>
 			    </div>
 		    </form>
 		<?php
