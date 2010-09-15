@@ -3,7 +3,7 @@ Contributors: aliciagh
 Tags: search, multisite, buddypress, widget, multilingual, global, shortcode
 Requires at least: 3.0
 Tested up to: 3.0.1
-Stable tag: 1.2.1
+Stable tag: 1.2.2
 
 Adds the ability to search through blogs into your WordPress Multisite installation. Based on my other plugin WPMU GLobal Search.
 
@@ -72,6 +72,7 @@ Insert search form in templates using the shortcode: `[multisite_search_form]`
 3. Horizontal Global Search widget.
 
 == Changelog ==
+* Fixed: Fatal error redeclared functions
 
 = 1.2.1 =
 * Fixed: database prefix problem
@@ -91,6 +92,9 @@ Insert search form in templates using the shortcode: `[multisite_search_form]`
 * Fixed: style for results page
 
 == Upgrade Notice ==
+
+= 1.2.2 =
+Fixed a fatal error. Sorry for the inconveniences.
 
 = 1.2.1 =
 This version fixes a bug with database prefix.
