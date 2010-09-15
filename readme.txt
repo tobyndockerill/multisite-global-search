@@ -3,7 +3,7 @@ Contributors: aliciagh
 Tags: search, multisite, buddypress, widget, multilingual, global, shortcode
 Requires at least: 3.0
 Tested up to: 3.0.1
-Stable tag: 1.2.1
+Stable tag: 1.2.2
 
 Adds the ability to search through blogs into your WordPress Multisite installation. Based on my other plugin WPMU GLobal Search.
 
@@ -18,6 +18,12 @@ Currently in the following languages:
 * Spanish (es_ES)
 
 If you have created your own language pack, or have an update of an existing one, you can send [gettext .po and .mo files](http://codex.wordpress.org/Translating_WordPress) to me so that I can bundle it into Multisite Global Search.
+
+**New features 1.2.2**
+
+* Fixed some bugs with database prefix.
+* Clean database when the plugin is deactivated.
+* Put search form into your code.
 
 **New features 1.2**
 
@@ -65,6 +71,10 @@ If you have any further questions, please submit them.
 
 Insert search form in templates using the shortcode: `[multisite_search_form]`
 
+= Can I put search form into PHP files using a function?
+
+Yes, put this code into your files: `Multisite_Global_Search::ms_global_search_vertical_form(your_results_page)` or `Multisite_Global_Search::ms_global_search_horizontal_form(your_results_page)`
+
 == Screenshots ==
 
 1. Widget configuration.
@@ -75,7 +85,8 @@ Insert search form in templates using the shortcode: `[multisite_search_form]`
 
 = 1.2.2 =
 * Fixed: Fatal error redeclared functions
-* Added: deactivation hook
+* Added: deactivation hook. Clean database when the plugin is deactivated
+* Changed: search form can be used into PHP files
 
 = 1.2.1 =
 * Fixed: database prefix problem
@@ -97,7 +108,7 @@ Insert search form in templates using the shortcode: `[multisite_search_form]`
 == Upgrade Notice ==
 
 = 1.2.2 =
-Fixed a fatal error. Sorry for the inconveniences.
+Fixing a fatal error and adding new features. Sorry for the inconveniences.
 
 = 1.2.1 =
 This version fixes a bug with database prefix.
