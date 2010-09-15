@@ -574,19 +574,19 @@ if( !function_exists( 'ms_global_search_v_query' ) ) {
 		    $v_query1  = "CREATE OR REPLACE VIEW `{$wpdb->base_prefix}v_posts` AS ".$posts_select_query;
 			if ( $wpdb->query( $wpdb->prepare( $v_query1 ) ) === false ) {
 				$wpdb->print_error();
-				wp_die( __( 'Error creating search views in the database. <a href="plugins.php">Deactivate Multisite Global Search</a> and check you have create views privilege in your WordPress database.', 'ms-global-search' ) );
+				wp_die( __( 'Error creating search views in the database. <a href="plugins.php">Deactivate Multisite Global Search</a> and check you have create views privilege in your WordPress database.', 'ms-global-search' ).'<br />'. $wpdb->last_error );
 			}
 			
 			$v_query2  = "CREATE OR REPLACE VIEW `{$wpdb->base_prefix}v_postmeta` AS ".$postmeta_select_query;
 			if ( $wpdb->query( $wpdb->prepare( $v_query2 ) ) === false ) {
 				$wpdb->print_error();
-				wp_die( __( 'Error creating search views in the database. <a href="plugins.php">Deactivate Multisite Global Search</a> and check you have create views privilege in your WordPress database.', 'ms-global-search' ) );
+				wp_die( __( 'Error creating search views in the database. <a href="plugins.php">Deactivate Multisite Global Search</a> and check you have create views privilege in your WordPress database.', 'ms-global-search' ).'<br />'. $wpdb->last_error );
 			}
 			
 			$v_query3  = "CREATE OR REPLACE VIEW `{$wpdb->base_prefix}v_comments` AS ".$comments_select_query;
 			if ( $wpdb->query( $wpdb->prepare( $v_query3 ) ) === false ) {
 				$wpdb->print_error();
-				wp_die( __( 'Error creating search views in the database. <a href="plugins.php">Deactivate Multisite Global Search</a> and check you have create views privilege in your WordPress database.', 'ms-global-search' ) );
+				wp_die( __( 'Error creating search views in the database. <a href="plugins.php">Deactivate Multisite Global Search</a> and check you have create views privilege in your WordPress database.', 'ms-global-search' ).'<br />'. $wpdb->last_error );
 			}
 	    } else {
 	    	wp_die( __( '<strong>Multisite Global Search</strong></a> requires multisite installation. Please <a href="http://codex.wordpress.org/Create_A_Network">create a network</a> first, or <a href="plugins.php">deactivate Multisite Global Search</a>.', 'ms-global-search' ) );
