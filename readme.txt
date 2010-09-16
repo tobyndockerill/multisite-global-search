@@ -71,7 +71,7 @@ If you have any further questions, please submit them.
 
 Insert search form in templates using the shortcode: `[multisite_search_form]`
 
-= Can I put search form into PHP files using a function?
+= Can I put search form into PHP files using a function? =
 
 Yes, put this code into your files: `Multisite_Global_Search::ms_global_search_vertical_form(your_results_page)` or `Multisite_Global_Search::ms_global_search_horizontal_form(your_results_page)`
 
