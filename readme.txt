@@ -52,6 +52,7 @@ If you have created your own language pack, or have an update of an existing one
 **Requeriments**
 
 * WordPress Multisite Installation.
+* MySQL 5.0.1 or greater.
 * Create view privilege in WordPress database.
 * Permalink structure must be diferent to default when widget is activated in a blog of your network.
 
