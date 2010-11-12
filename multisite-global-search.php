@@ -3,7 +3,7 @@
  * Plugin Name: Multisite Global Search
  * Plugin URI: http://grial.usal.es/agora/pfcgrial/multisite-search
  * Description: Adds the ability to search through blogs into your WordPress Multisite installation. Based on my other plugin WPMU GLobal Search.
- * Version: 1.2.2
+ * Version: 1.2.3
  * Requires at least: WordPress 3.0
  * Tested up to: WordPress 3.0.1
  * Author: Alicia García Holgado
@@ -41,7 +41,14 @@ if( !function_exists( 'ms_global_search_install_multisite_notice' ) ) {
 	}
 }
 
-load_plugin_textdomain( 'ms-global-search', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+if ( !defined( 'DIRECTORY_SEPARATOR' ) ) {
+	if ( strpos( php_uname( 's' ), 'Win' ) !== false )
+		define( 'DIRECTORY_SEPARATOR', '\\' );
+	else
+		define( 'DIRECTORY_SEPARATOR', '/' );
+}
+
+load_plugin_textdomain( 'ms-global-search', false, dirname( plugin_basename( __FILE__ ) ) . DIRECTORY_SEPARATOR. 'languages' );
 
 $option = get_option( 'permalink_structure' );
 if ( empty ( $option ) ) {
@@ -153,17 +160,21 @@ if( !class_exists( 'Multisite_Global_Search' ) ) {
 			if( isset( $this ) ) $id_base = $this->id_base;
 			else $id_base = 'ms-global-search';
 			
-			$rand = rand(); ?>
-			<form class="ms-global-search_form" method="get" action="<?php echo get_bloginfo( 'url' ).'/'.$page.'/'; ?>">
+			$rand = rand(); $rand2 = $rand + 1; ?>
+			<form class="ms-global-search_form" method="get" action="<?php echo get_bloginfo( 'wpurl' ).'/'.$page.'/'; ?>">
 				<div>
 				    <p><?php _e( 'Search across all blogs:', 'ms-global-search' ) ?></p>
 				    <input class="ms-global-search_vbox" name="mssearch" type="text" value="" size="16" tabindex="1" />
 				    <input type="submit" class="button" value="<?php _e( 'Search', 'ms-global-search' )?>" tabindex="2" />
 				    
+				    <p><input title="<?php _e( 'Search on pages', 'ms-global-search' ); ?>" type="checkbox" id="<?php echo $id_base.'_'.$rand2 ?>" name="msp" value="1" /><?php _e( 'Search on pages', 'ms-global-search' ); ?></p>
+				    
+				    <?php if( get_current_user_id() != 0 ) { ?>
 				    <p>
-				    	<input title="<?php _e( 'Search on all blogs', 'ms-global-search' ); ?>" type="radio" id="<?php echo $id_base.'_'.$rand ?>" name="mswhere" value="all" checked='checked'><?php _e( 'All', 'ms-global-search' ); ?>
-						<input title="<?php _e( 'Search only on your blogs', 'ms-global-search' ); ?>" type="radio" id="<?php echo $id_base.'_'.$rand ?>" name="mswhere" value="my"><?php _e( 'My blogs', 'ms-global-search' ); ?>
+				    	<input title="<?php _e( 'Search on all blogs', 'ms-global-search' ); ?>" type="radio" id="<?php echo $id_base.'_'.$rand ?>" name="mswhere" value="all" checked='checked' /><?php _e( 'All', 'ms-global-search' ); ?>
+						<input title="<?php _e( 'Search only on blogs where I\'m a member', 'ms-global-search' ); ?>" type="radio" id="<?php echo $id_base.'_'.$rand ?>" name="mswhere" value="my" /><?php _e( 'Blogs where I\'m a member', 'ms-global-search' ); ?>
 				    </p>
+				    <?php } ?>
 			    </div>
 		    </form>
 		<?php
@@ -174,14 +185,18 @@ if( !class_exists( 'Multisite_Global_Search' ) ) {
 			else $id_base = 'ms-global-search';
 			
 			$rand = rand(); ?>
-		    <form class="ms-global-search_form" method="get" action="<?php echo get_bloginfo( 'url' ).'/'.$page.'/'; ?>">
+		    <form class="ms-global-search_form" method="get" action="<?php echo get_bloginfo( 'wpurl' ).'/'.$page.'/'; ?>">
 			    <div>
 				    <span><?php _e( 'Search across all blogs:', 'ms-global-search' ) ?>&nbsp;</span>
 				    <input class="ms-global-search_hbox" name="mssearch" type="text" value="" size="16" tabindex="1" />
 				    <input type="submit" class="button" value="<?php _e( 'Search', 'ms-global-search' ) ?>" tabindex="2" />
-
+                    
+                    <input title="<?php _e( 'Search on pages', 'ms-global-search' ); ?>" type="checkbox" id="<?php echo $id_base.'_'.$rand2 ?>" name="msp" value="1" /><?php _e( 'Search on pages', 'ms-global-search' ); ?>
+                    
+			        <?php if( get_current_user_id() != 0 ) { ?>
 				    <input title="<?php _e( 'Search on all blogs', 'ms-global-search' ); ?>" type="radio" id="<?php echo $id_base.'_'.$rand ?>" name="mswhere" value="all" checked='checked'><?php _e( 'All', 'ms-global-search' ); ?>
-					<input title="<?php _e( 'Search only on your blogs', 'ms-global-search' ); ?>" type="radio" id="<?php echo $id_base.'_'.$rand ?>" name="mswhere" value="my"><?php _e( 'My blogs', 'ms-global-search' ); ?>
+					<input title="<?php _e( 'Search only on blogs where I\'m a member', 'ms-global-search' ); ?>" type="radio" id="<?php echo $id_base.'_'.$rand ?>" name="mswhere" value="my"><?php _e( 'Blogs where I\'m a member', 'ms-global-search' ); ?>
+                    <?php } ?>
 			    </div>
 		    </form>
 		<?php
@@ -204,8 +219,8 @@ if( !function_exists( 'ms_global_search_register' ) ) {
  */
 if( !function_exists( 'ms_global_search_style' ) ) {
 	function ms_global_search_style() {
-		$styleurl = WP_PLUGIN_URL."/".basename( dirname( __FILE__ ) )."/style.css";
-		$styledir = WP_PLUGIN_DIR."/".basename( dirname( __FILE__ ) )."/style.css";
+		$styleurl = WP_PLUGIN_URL.DIRECTORY_SEPARATOR.basename( dirname( __FILE__ ) ).DIRECTORY_SEPARATOR."style.css";
+		$styledir = WP_PLUGIN_DIR.DIRECTORY_SEPARATOR.basename( dirname( __FILE__ ) ).DIRECTORY_SEPARATOR."style.css";
 		
 		if( file_exists( $styledir ) )
 			wp_enqueue_style( 'ms_global_search_css_style', $styleurl );
@@ -221,6 +236,7 @@ if( !function_exists( 'ms_global_search_queryvars' ) ) {
 	function ms_global_search_queryvars( $qvars ) {
 	  $qvars[] = 'mssearch';
 	  $qvars[] = 'mswhere';
+	  $qvars[] = 'msp';
 	  return $qvars;
 	}
 }
@@ -301,7 +317,7 @@ if( !function_exists( 'ms_global_search_get_edit_link' ) ) {
 		case 'page' :
 			if ( !current_user_can( 'edit_page', $s->ID ) )
 				return;
-			$file = 'page';
+			$file = 'post';
 			$var  = 'post';
 			break;
 		case 'attachment' :
@@ -394,7 +410,7 @@ if( !function_exists( 'ms_global_search_page' ) ) {
 	
 		if( !empty( $term ) ) {
 			$wheresearch = '';
-			/* Search only on user blogs. */
+			/* Search only on user blogs if . */
 			$userid = get_current_user_id();
 			if( strcmp( apply_filters ( 'get_search_query', get_query_var( 'mswhere' ) ), 'my' ) == 0 && $userid != 0 ) {
 				$userblogs = get_blogs_of_user( $userid );
@@ -409,9 +425,16 @@ if( !function_exists( 'ms_global_search_page' ) ) {
 				}
 			}
 			
+			/* Search on pages */
+			if(get_query_var( 'msp' )) {
+                $post_type = "( post_type = 'post' OR post_type = 'page' )";
+			} else {
+                $post_type = "post_type = 'post'";
+			}
+			
 			$request = $wpdb->prepare( "SELECT ".$wpdb->base_prefix."v_posts.* from ".$wpdb->base_prefix."v_posts left join ".$wpdb->users." on ".$wpdb->users.".ID=".$wpdb->base_prefix."v_posts.post_author ".
 			"where ".$wheresearch." ( post_title LIKE '%%".$term."%%' OR post_content LIKE '%%".$term."%%' OR ".$wpdb->users.".display_name LIKE '%%".$term."%%' )".
-		    "AND ( post_status = 'publish' OR post_status = 'private' ) AND post_type = 'post' ORDER BY ".$wpdb->base_prefix."v_posts.blog_id ASC, ".$wpdb->base_prefix."v_posts.post_date DESC, ".$wpdb->base_prefix."v_posts.comment_count DESC" );
+		    "AND ( post_status = 'publish' OR post_status = 'private' ) AND ".$post_type." ORDER BY ".$wpdb->base_prefix."v_posts.blog_id ASC, ".$wpdb->base_prefix."v_posts.post_date DESC, ".$wpdb->base_prefix."v_posts.comment_count DESC" );
 	
 			$search = $wpdb->get_results( $request );
 	
@@ -473,28 +496,36 @@ if( !function_exists( 'ms_global_search_form' ) ) {
 		
 		$rand = rand();
 		if( strcmp( $type, 'horizontal' ) == 0 ) { ?>
-			<form class="ms-global-search_form" method="get" action="<?php echo get_bloginfo( 'url' ).'/'.$page.'/'; ?>">
+			<form class="ms-global-search_form" method="get" action="<?php echo get_bloginfo( 'wpurl' ).'/'.$page.'/'; ?>">
 			    <div>
 				    <span><?php _e( 'Search across all blogs:', 'ms-global-search' ) ?>&nbsp;</span>
 				    <input class="ms-global-search_hbox" name="mssearch" type="text" value="" size="16" tabindex="1" />
 				    <input type="submit" class="button" value="<?php _e( 'Search', 'ms-global-search' ) ?>" tabindex="2" />
-	
+	                
+	                <input title="<?php _e( 'Search on pages', 'ms-global-search' ); ?>" type="checkbox" id="<?php echo $id_base.'_'.$rand2 ?>" name="msp" value="1" /><?php _e( 'Search on pages', 'ms-global-search' ); ?>
+	                
+	                <?php if( get_current_user_id() != 0 ) { ?>
 				    <input title="<?php _e( 'Search on all blogs', 'ms-global-search' ); ?>" type="radio" id="<?php echo "ms-global-search-form-".$rand ?>" name="mswhere" value="all" checked='checked'><?php _e( 'All', 'ms-global-search' ); ?>
-					<input title="<?php _e( 'Search only on your blogs', 'ms-global-search' ); ?>" type="radio" id="<?php echo "ms-global-search-form-".$rand ?>" name="mswhere" value="my"><?php _e( 'My blogs', 'ms-global-search' ); ?>
+					<input title="<?php _e( 'Search only on blogs where I\'m a member', 'ms-global-search' ); ?>" type="radio" id="<?php echo "ms-global-search-form-".$rand ?>" name="mswhere" value="my"><?php _e( 'Blogs where I\'m a member', 'ms-global-search' ); ?>
+			        <?php } ?>
 			    </div>
 		    </form>
 		<?php
 		} else { ?>
-			<form class="ms-global-search_form" method="get" action="<?php echo get_bloginfo( 'url' ).'/'.$page.'/'; ?>">
+			<form class="ms-global-search_form" method="get" action="<?php echo get_bloginfo( 'wpurl' ).'/'.$page.'/'; ?>">
 				<div>
 				    <p><?php _e( 'Search across all blogs:', 'ms-global-search' ) ?></p>
 				    <input class="ms-global-search_vbox" name="mssearch" type="text" value="" size="16" tabindex="1" />
 				    <input type="submit" class="button" value="<?php _e( 'Search', 'ms-global-search' )?>" tabindex="2" />
 				    
+				    <p><input title="<?php _e( 'Search on pages', 'ms-global-search' ); ?>" type="checkbox" id="<?php echo $id_base.'_'.$rand2 ?>" name="msp" value="1" /><?php _e( 'Search on pages', 'ms-global-search' ); ?></p>
+                    
+                    <?php if( get_current_user_id() != 0 ) { ?>
 				    <p>
 				    	<input title="<?php _e( 'Search on all blogs', 'ms-global-search' ); ?>" type="radio" id="<?php echo "ms-global-search-form-".$rand ?>" name="mswhere" value="all" checked='checked'><?php _e( 'All', 'ms-global-search' ); ?>
-						<input title="<?php _e( 'Search only on your blogs', 'ms-global-search' ); ?>" type="radio" id="<?php echo "ms-global-search-form-".$rand ?>" name="mswhere" value="my"><?php _e( 'My blogs', 'ms-global-search' ); ?>
+						<input title="<?php _e( 'Search only on blogs where I\'m a member', 'ms-global-search' ); ?>" type="radio" id="<?php echo "ms-global-search-form-".$rand ?>" name="mswhere" value="my"><?php _e( 'Blogs where I\'m a member', 'ms-global-search' ); ?>
 				    </p>
+				    <?php } ?>
 			    </div>
 			</form>
 		<?php
@@ -580,19 +611,16 @@ if( !function_exists( 'ms_global_search_v_query' ) ) {
 	    if( $blogs != null ) {
 		    $v_query1  = "CREATE OR REPLACE VIEW `{$wpdb->base_prefix}v_posts` AS ".$posts_select_query;
 			if ( $wpdb->query( $wpdb->prepare( $v_query1 ) ) === false ) {
-				$wpdb->print_error();
 				wp_die( __( 'Error creating search views in the database. <a href="plugins.php">Deactivate Multisite Global Search</a> and check you have create views privilege in your WordPress database.', 'ms-global-search' ).'<br />'. $wpdb->last_error );
 			}
 			
 			$v_query2  = "CREATE OR REPLACE VIEW `{$wpdb->base_prefix}v_postmeta` AS ".$postmeta_select_query;
 			if ( $wpdb->query( $wpdb->prepare( $v_query2 ) ) === false ) {
-				$wpdb->print_error();
 				wp_die( __( 'Error creating search views in the database. <a href="plugins.php">Deactivate Multisite Global Search</a> and check you have create views privilege in your WordPress database.', 'ms-global-search' ).'<br />'. $wpdb->last_error );
 			}
 			
 			$v_query3  = "CREATE OR REPLACE VIEW `{$wpdb->base_prefix}v_comments` AS ".$comments_select_query;
 			if ( $wpdb->query( $wpdb->prepare( $v_query3 ) ) === false ) {
-				$wpdb->print_error();
 				wp_die( __( 'Error creating search views in the database. <a href="plugins.php">Deactivate Multisite Global Search</a> and check you have create views privilege in your WordPress database.', 'ms-global-search' ).'<br />'. $wpdb->last_error );
 			}
 	    } else {

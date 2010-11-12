@@ -3,7 +3,7 @@ Contributors: aliciagh
 Tags: search, multisite, buddypress, widget, multilingual, global, shortcode
 Requires at least: 3.0
 Tested up to: 3.0.1
-Stable tag: 1.2.2
+Stable tag: 1.2.3
 
 Adds the ability to search through blogs into your WordPress Multisite installation. Based on my other plugin WPMU GLobal Search.
 
@@ -18,6 +18,9 @@ Currently in the following languages:
 * Spanish (es_ES)
 
 If you have created your own language pack, or have an update of an existing one, you can send [gettext .po and .mo files](http://codex.wordpress.org/Translating_WordPress) to me so that I can bundle it into Multisite Global Search.
+
+**New features 1.2.3**
+* Search on pages.
 
 **New features 1.2.2**
 
@@ -39,7 +42,7 @@ If you have created your own language pack, or have an update of an existing one
 **Features**
 
 * Multisite Global Search Widget. Show a search form in your sidebar.
-* Customizable results page URI.
+* Customizable relative URI for results page.
 * Two different form types, vertical and horizontal.
 * Search across all network blogs or only in your blogs if you are logged.
 * Search results are showed in a page which contents the shortcode: `[multisite_search_result]`
@@ -52,14 +55,15 @@ If you have created your own language pack, or have an update of an existing one
 **Requeriments**
 
 * WordPress Multisite Installation.
-* Create view privilege in WordPress database.
+* MySQL 5.0.1 or greater.
+* The MySQL user needs to be assigned the ability to "create views" and "drop views" in WordPress database.
 * Permalink structure must be diferent to default when widget is activated in a blog of your network.
 
 **Installation is easy**
 
 1. Upload `multisite-global-search` folder to the `wp-content/plugins` directory in your WordPress multisite installation.
 2. Activate the plugin in your Administration Panel.
-3. Create a new page in your blog with default global search uri: `globalsearch`.
+3. Create a new page in your blog with the permalink URL: `http//yourblog/globalsearch/.`.
 4. Place `[multisite_search_result]` in the post content area.
 5. Activate widget `Multisite Global Search`.
 
@@ -75,6 +79,10 @@ Insert search form in templates using the shortcode: `[multisite_search_form]`
 
 Yes, put this code into your files: `Multisite_Global_Search::ms_global_search_vertical_form(your_results_page)` or `Multisite_Global_Search::ms_global_search_horizontal_form(your_results_page)`
 
+= Get error "check you have create views privilege in your WordPress database. Illegal mix of collations for operation 'UNION'". =
+
+The instruction means that you may not have given the necessary priviledges to your MySQL user. The user needs to be assigned the ability to "create views".
+
 == Screenshots ==
 
 1. Widget configuration.
@@ -82,6 +90,12 @@ Yes, put this code into your files: `Multisite_Global_Search::ms_global_search_v
 3. Horizontal Global Search widget.
 
 == Changelog ==
+
+= 1.2.3 =
+* Fixed: windows paths.
+* Fixed: problemns with blog url.
+* Added: search on pages.
+* Changed: radio button to "search only blogs where I'm a member" is showed when user are logged in.
 
 = 1.2.2 =
 * Fixed: Fatal error redeclared functions
@@ -106,6 +120,9 @@ Yes, put this code into your files: `Multisite_Global_Search::ms_global_search_v
 * Fixed: style for results page
 
 == Upgrade Notice ==
+
+= 1.2.3 =
+Now search on pages.
 
 = 1.2.2 =
 Fixing a fatal error and adding new features. Sorry for the inconveniences.
