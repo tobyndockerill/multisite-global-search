@@ -2,8 +2,8 @@
 Contributors: aliciagh
 Tags: search, multisite, buddypress, widget, multilingual, global, shortcode
 Requires at least: 3.0
-Tested up to: 3.0.1
-Stable tag: 1.2.3
+Tested up to: 3.0.4
+Stable tag: 1.2.4
 
 Adds the ability to search through blogs into your WordPress Multisite installation. Based on my other plugin WPMU GLobal Search.
 
@@ -16,10 +16,18 @@ Currently in the following languages:
 
 * English
 * Spanish (es_ES)
+* Russian (ru_RU)
 
 If you have created your own language pack, or have an update of an existing one, you can send [gettext .po and .mo files](http://codex.wordpress.org/Translating_WordPress) to me so that I can bundle it into Multisite Global Search.
 
+**New features 1.2.4**
+
+* Russian language pack by Sam Savinov.
+* Fixed bugs with upgrades from WPMU to WP3.0 Multisite.
+* Fixed bugs with excerpt option.
+
 **New features 1.2.3**
+
 * Search on pages.
 
 **New features 1.2.2**
@@ -63,8 +71,16 @@ If you have created your own language pack, or have an update of an existing one
 
 1. Upload `multisite-global-search` folder to the `wp-content/plugins` directory in your WordPress multisite installation.
 2. Activate the plugin in your Administration Panel.
-3. Create a new page in your blog with the permalink URL: `http//yourblog/globalsearch/.`.
+3. Create a new page in your main site with the permalink URL: `http//yoursite/globalsearch/.`.
 4. Place `[multisite_search_result]` in the post content area.
+5. Activate widget `Multisite Global Search`.
+
+**Upgrade instructions**
+
+1. Deactivate the plugin in your Administration Panel.
+2. Earlier version to 1.2.2 needs drop tables from the database: drop view yourdatabaseprefix_v_posts; drop view yourdatabaseprefix_v_comments; drop view yourdatabaseprefix_v_postmeta;
+3. Upgrade the plugin.
+4. Activate the plugin in your Administration Panel.
 5. Activate widget `Multisite Global Search`.
 
 == Frequently Asked Questions ==
@@ -83,6 +99,10 @@ Yes, put this code into your files: `Multisite_Global_Search::ms_global_search_v
 
 The instruction means that you may not have given the necessary priviledges to your MySQL user. The user needs to be assigned the ability to "create views".
 
+= Limit results to just the title and the excerpt =
+
+Edit results page and place `[multisite_search_result excerpt="yes"]` in the post content area instead of `[multisite_search_result]`
+
 == Screenshots ==
 
 1. Widget configuration.
@@ -91,11 +111,16 @@ The instruction means that you may not have given the necessary priviledges to y
 
 == Changelog ==
 
+= 1.2.4 =
+* Fixed: empty excerpts
+* Fixed: problems when you have upgraded from WPMU to WP3.0 Multisite
+* Added: Russian language pack
+
 = 1.2.3 =
-* Fixed: windows paths.
-* Fixed: problemns with blog url.
-* Added: search on pages.
-* Changed: radio button to "search only blogs where I'm a member" is showed when user are logged in.
+* Fixed: windows paths
+* Fixed: problemns with blog url
+* Added: search on pages
+* Changed: radio button to "search only blogs where I'm a member" is showed when user are logged in
 
 = 1.2.2 =
 * Fixed: Fatal error redeclared functions
@@ -120,6 +145,9 @@ The instruction means that you may not have given the necessary priviledges to y
 * Fixed: style for results page
 
 == Upgrade Notice ==
+
+= 1.2.4 =
+Important! Fixing some problems with WPMU upgraded to WP3.0 Multisite.
 
 = 1.2.3 =
 Now search on pages.

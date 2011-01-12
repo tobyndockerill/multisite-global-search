@@ -3,9 +3,9 @@
  * Plugin Name: Multisite Global Search
  * Plugin URI: http://grial.usal.es/agora/pfcgrial/multisite-search
  * Description: Adds the ability to search through blogs into your WordPress Multisite installation. Based on my other plugin WPMU GLobal Search.
- * Version: 1.2.3
+ * Version: 1.2.4
  * Requires at least: WordPress 3.0
- * Tested up to: WordPress 3.0.1
+ * Tested up to: WordPress 3.0.4
  * Author: Alicia García Holgado
  * Author URI: http://grial.usal.es/agora/mambanegra
  * License: GPL v2 - http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -28,7 +28,7 @@ Network: true
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-if ( !defined( 'MULTISITE' ) || MULTISITE == false ) {
+if ( !is_multisite() ) {
 	add_action( 'admin_notices', 'ms_global_search_install_multisite_notice' );
 	return;
 }
@@ -274,33 +274,34 @@ if( !function_exists( 'ms_global_search_get_the_excerpt' ) ) {
 	        <p><label for="' . $label . '">' . __( 'Password', 'ms-global-search' ) . ' <input name="post_password" id="' . $label . '" type="password" size="20" /></label> <input type="submit" name="Submit" value="' . __( 'Submit', 'ms-global-search' ) . '" /></p>
 	        </form>
 	        ';
-			return apply_filters( 'the_password_form', $output);
+			return apply_filters( 'the_password_form', $output );
 		}
 		
 		$excerpt = $s->post_excerpt;
-		$excerpt = apply_filters( 'get_the_excerpt', $excerpt);
-		$excerpt = apply_filters( 'the_excerpt', $excerpt);
 		
-		$raw_excerpt = $excerpt;
-		if ( '' == $excerpt ) {
+		if ( empty( $excerpt ) ) {
+		    $raw_excerpt = $excerpt;
 			$excerpt = $s->post_content;
 	
 			$excerpt = strip_shortcodes( $excerpt );
 	
-			$excerpt = apply_filters('the_content', $excerpt);
-			$excerpt = str_replace(']]>', ']]&gt;', $excerpt);
-			$excerpt_length = apply_filters('excerpt_length', 55);
+			$excerpt = apply_filters( 'the_content', $excerpt );
+			$excerpt = str_replace( ']]>', ']]&gt;', $excerpt );
+			$excerpt_length = apply_filters( 'excerpt_length', 55 );
 			$excerpt_more = '... <a href="'. get_blog_permalink( $s->blog_id, $s->ID ). '">' . __( '(Read more)', 'ms-global-search' ) . '</a>';
-			$words = preg_split("/[\n\r\t ]+/", $excerpt, $excerpt_length + 1, PREG_SPLIT_NO_EMPTY);
+			$words = preg_split( "/[\n\r\t ]+/", $excerpt, $excerpt_length + 1, PREG_SPLIT_NO_EMPTY );
 			if ( count($words) > $excerpt_length ) {
-				array_pop($words);
-				$excerpt = implode(' ', $words);
+				array_pop( $words );
+				$excerpt = implode( ' ', $words );
 				$excerpt = $excerpt . $excerpt_more;
 			} else {
-				$excerpt = implode(' ', $words);
+				$excerpt = implode( ' ', $words );
 			}
+			
+			return $excerpt;
+		} else {
+		    return apply_filters( 'get_the_excerpt', $excerpt );
 		}
-		return apply_filters('wp_trim_excerpt', $excerpt, $raw_excerpt);
 	}
 }
 
@@ -410,7 +411,7 @@ if( !function_exists( 'ms_global_search_page' ) ) {
 	
 		if( !empty( $term ) ) {
 			$wheresearch = '';
-			/* Search only on user blogs if . */
+			// Search only on user blogs.
 			$userid = get_current_user_id();
 			if( strcmp( apply_filters ( 'get_search_query', get_query_var( 'mswhere' ) ), 'my' ) == 0 && $userid != 0 ) {
 				$userblogs = get_blogs_of_user( $userid );
@@ -425,7 +426,7 @@ if( !function_exists( 'ms_global_search_page' ) ) {
 				}
 			}
 			
-			/* Search on pages */
+			// Search on pages.
 			if(get_query_var( 'msp' )) {
                 $post_type = "( post_type = 'post' OR post_type = 'page' )";
 			} else {
@@ -437,7 +438,8 @@ if( !function_exists( 'ms_global_search_page' ) ) {
 		    "AND ( post_status = 'publish' OR post_status = 'private' ) AND ".$post_type." ORDER BY ".$wpdb->base_prefix."v_posts.blog_id ASC, ".$wpdb->base_prefix."v_posts.post_date DESC, ".$wpdb->base_prefix."v_posts.comment_count DESC" );
 	
 			$search = $wpdb->get_results( $request );
-	
+	        
+			// Show search results.
 			if( empty( $search ) ) { ?>
 				<h3 class='globalpage_title center'><?php _e( "Not found", 'ms-global-search' ) ?> <span class='ms-global-search_term'><?php echo $term; ?></span><?php if( !empty( $wheresearch ) ) echo " ".__( 'in your blogs', 'ms-global-search' ); ?>.</h3>
 				<p class='globalpage_message center'><?php _e( "Sorry, but you are looking for something that isn't here.", 'ms-global-search' ) ?></p>
@@ -585,6 +587,9 @@ if( !function_exists( 'ms_global_search_build_views_unarchive' ) ) {
 	}
 }
 
+/*
+ * Build search views.
+ */
 if( !function_exists( 'ms_global_search_v_query' ) ) {
 	function ms_global_search_v_query( $blogs ) {
 	    global $wpdb;
@@ -600,14 +605,17 @@ if( !function_exists( 'ms_global_search_v_query' ) ) {
 	            $comments_select_query .= ' UNION ';
 	        }
 	        
-	        $posts_select_query    .= " ( SELECT '{$blog->blog_id}' AS blog_id, '{$blog->domain}' AS domain, '{$blog->path}' AS path, posts{$blog->blog_id}.* FROM {$wpdb->get_blog_prefix( $blog->blog_id )}posts posts{$blog->blog_id} WHERE posts{$blog->blog_id}.post_type != 'revision' AND posts{$blog->blog_id}.post_status = 'publish' ) ";
-	        $postmeta_select_query .= " ( SELECT '{$blog->blog_id}' AS blog_id, '{$blog->domain}' AS domain, '{$blog->path}' AS path, postmeta{$blog->blog_id}.* FROM {$wpdb->get_blog_prefix( $blog->blog_id )}postmeta postmeta{$blog->blog_id} ) ";
-	        $comments_select_query .= " ( SELECT '{$blog->blog_id}' AS blog_id, '{$blog->domain}' AS domain, '{$blog->path}' AS path, comments{$blog->blog_id}.* FROM {$wpdb->get_blog_prefix( $blog->blog_id )}comments comments{$blog->blog_id} ) ";
+	        // Get blog prefix
+	        $blogprefix = $wpdb->get_blog_prefix( $blog->blog_id );
+	        
+	        $posts_select_query    .= " ( SELECT '{$blog->blog_id}' AS blog_id, '{$blog->domain}' AS domain, '{$blog->path}' AS path, posts{$blog->blog_id}.* FROM {$blogprefix}posts posts{$blog->blog_id} WHERE posts{$blog->blog_id}.post_type != 'revision' AND posts{$blog->blog_id}.post_status = 'publish' ) ";
+	        $postmeta_select_query .= " ( SELECT '{$blog->blog_id}' AS blog_id, '{$blog->domain}' AS domain, '{$blog->path}' AS path, postmeta{$blog->blog_id}.* FROM {$blogprefix}postmeta postmeta{$blog->blog_id} ) ";
+	        $comments_select_query .= " ( SELECT '{$blog->blog_id}' AS blog_id, '{$blog->domain}' AS domain, '{$blog->path}' AS path, comments{$blog->blog_id}.* FROM {$blogprefix}comments comments{$blog->blog_id} ) ";
 	        
 	        $i++;
 	    }
 	    
-	
+	    // Create or replace views.
 	    if( $blogs != null ) {
 		    $v_query1  = "CREATE OR REPLACE VIEW `{$wpdb->base_prefix}v_posts` AS ".$posts_select_query;
 			if ( $wpdb->query( $wpdb->prepare( $v_query1 ) ) === false ) {
@@ -629,6 +637,9 @@ if( !function_exists( 'ms_global_search_v_query' ) ) {
 	}
 }
 
+/*
+ * Delete search views.
+ */
 if( !function_exists( 'ms_global_search_drop_views' ) ) {
 	function ms_global_search_drop_views() {
 		global $wpdb;
