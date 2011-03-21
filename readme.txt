@@ -27,17 +27,15 @@ If you have created your own language pack, or have an update of an existing one
 * Multisite Global Search Widget. Show a search form in your sidebar.
 * Search across all network blogs or only in your blogs if you are logged.
 * Search on pages.
+* Administrative choice to perform searches by default on pages.
 * Search results are showed in a page which contents the shortcode: `[multisite_search_result]`
+* Show excerpted results `[multisite_search_result excerpt="yes"]`
 * Entries on every site across your installation appear in search results immediately after publication.
 * Receive results from your complete blog network, even sites you do not own or control.
 * Customizable style sheet for widget and results page.
 * Two different form types, vertical and horizontal.
-* Put search form into your code.
-`Multisite_Global_Search::ms_global_search_vertical_form(your_results_page)`
-`Multisite_Global_Search::ms_global_search_horizontal_form(your_results_page)`
-* Insert search form in templates using the shortcode: `[multisite_search_result]`. [See the plugin page for more information](http://grial.usal.es/agora/pfcgrial/multisite-search).
-* Show excerpted results `[multisite_search_result excerpt="yes"]`
-* Administrative choice to perform searches by default on pages.
+* Put search form into your code with `Multisite_Global_Search::ms_global_search_vertical_form(your_results_page)` or `Multisite_Global_Search::ms_global_search_horizontal_form(your_results_page)`
+* Insert search form in templates using the shortcode: `[multisite_search_form]`. [See the plugin page for more information](http://grial.usal.es/agora/pfcgrial/multisite-search).
 
 == Installation ==
 
