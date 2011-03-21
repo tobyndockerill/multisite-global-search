@@ -3,7 +3,7 @@ Contributors: aliciagh
 Tags: search, multisite, buddypress, widget, multilingual, global, shortcode
 Requires at least: 3.0
 Tested up to: 3.0.4
-Stable tag: 1.2.4
+Stable tag: 1.2.5
 
 Adds the ability to search through blogs into your WordPress Multisite installation. Based on my other plugin WPMU GLobal Search.
 
@@ -15,48 +15,29 @@ This plugin is based on my other global search plugin, [WPMU Global Search](http
 Currently in the following languages:
 
 * English
+* French (fr_FR) by Fabrice Perrinel
+* Norwegian Bokmal (nb_NO) by Tore Johnny Bråtveit
+* Russian (ru_RU) by Sam Savinov
 * Spanish (es_ES)
-* Russian (ru_RU)
 
 If you have created your own language pack, or have an update of an existing one, you can send [gettext .po and .mo files](http://codex.wordpress.org/Translating_WordPress) to me so that I can bundle it into Multisite Global Search.
 
-**New features 1.2.4**
-
-* Russian language pack by Sam Savinov.
-* Fixed bugs with upgrades from WPMU to WP3.0 Multisite.
-* Fixed bugs with excerpt option.
-
-**New features 1.2.3**
-
-* Search on pages.
-
-**New features 1.2.2**
-
-* Fixed some bugs with database prefix.
-* Clean database when the plugin is deactivated.
-* Put search form into your code.
-
-**New features 1.2**
-
-* Check plugin requeriments.
-* Fixed some bugs.
-* Added error messages.
-
-**New features 1.1**
-
-* Insert search form in templates using the shortcode: `[multisite_search_result]`. [See the plugin page for more information](http://grial.usal.es/agora/pfcgrial/multisite-search).
-* Show excerpted results `[multisite_search_result excerpt="yes"]`
-
-**Features**
+** Features **
 
 * Multisite Global Search Widget. Show a search form in your sidebar.
-* Customizable relative URI for results page.
-* Two different form types, vertical and horizontal.
 * Search across all network blogs or only in your blogs if you are logged.
+* Search on pages.
 * Search results are showed in a page which contents the shortcode: `[multisite_search_result]`
 * Entries on every site across your installation appear in search results immediately after publication.
 * Receive results from your complete blog network, even sites you do not own or control.
 * Customizable style sheet for widget and results page.
+* Two different form types, vertical and horizontal.
+* Put search form into your code.
+`Multisite_Global_Search::ms_global_search_vertical_form(your_results_page)`
+`Multisite_Global_Search::ms_global_search_horizontal_form(your_results_page)`
+* Insert search form in templates using the shortcode: `[multisite_search_result]`. [See the plugin page for more information](http://grial.usal.es/agora/pfcgrial/multisite-search).
+* Show excerpted results `[multisite_search_result excerpt="yes"]`
+* Administrative choice to perform searches by default on pages.
 
 == Installation ==
 
@@ -91,6 +72,16 @@ If you have any further questions, please submit them.
 
 Insert search form in templates using the shortcode: `[multisite_search_form]`
 
+= How can show horizontal form using the shortcode? =
+
+Use `type` attribute to select vertical form or horizontal form. For example: `[multisite_search_form type="horizontal"]`
+Default attribute value is `vertical`.
+
+= How can change results page URI when you insert search form with the shortcode? =
+
+Use `page` attribute to change results page URI. For example: `[multisite_search_form page="multisite-search"]`. Search results will be showed in http://your_blog_URL/multisite-search.
+Default attribute value is `globalsearch`. 
+
 = Can I put search form into PHP files using a function? =
 
 Yes, put this code into your files: `Multisite_Global_Search::ms_global_search_vertical_form(your_results_page)` or `Multisite_Global_Search::ms_global_search_horizontal_form(your_results_page)`
@@ -103,6 +94,13 @@ The instruction means that you may not have given the necessary priviledges to y
 
 Edit results page and place `[multisite_search_result excerpt="yes"]` in the post content area instead of `[multisite_search_result]`
 
+= Set the plugin to always perform searches also in pages =
+
+Check option "Search by default on pages" when you configure Multisite Global Search Widget.
+
+If you use shortcode `[multisite_search_form]` use `search_on_pages` attribute to search by default on pages. For example: `[multisite_search_form search_on_pages="1"]`.
+Default attribute value is `0`.
+
 == Screenshots ==
 
 1. Widget configuration.
@@ -110,6 +108,13 @@ Edit results page and place `[multisite_search_result excerpt="yes"]` in the pos
 3. Horizontal Global Search widget.
 
 == Changelog ==
+
+= 1.2.5 =
+* Fixed: error message "The used SELECT statements have a different number of columns"
+* Fixed: show up private posts
+* Added: French language pack
+* Added: Norwegian Bokmal language pack
+* Changed: Administrative choice to perform searches by default on pages.
 
 = 1.2.4 =
 * Fixed: empty excerpts
@@ -145,6 +150,9 @@ Edit results page and place `[multisite_search_result excerpt="yes"]` in the pos
 * Fixed: style for results page
 
 == Upgrade Notice ==
+
+= 1.2.5 =
+Important! Fixing error message "The used SELECT statements have a different number of columns". French and Norwegian Bokmal translation.
 
 = 1.2.4 =
 Important! Fixing some problems with WPMU upgraded to WP3.0 Multisite.
