@@ -5,7 +5,7 @@
  * Description: Adds the ability to search through blogs into your WordPress Multisite installation. Based on my other plugin WPMU GLobal Search.
  * Version: 1.2.5
  * Requires at least: WordPress 3.0
- * Tested up to: WordPress 3.0.4
+ * Tested up to: WordPress 3.1
  * Author: Alicia García Holgado
  * Author URI: http://grial.usal.es/agora/mambanegra
  * License: GPL v2 - http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
