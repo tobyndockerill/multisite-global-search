@@ -26,7 +26,7 @@ class Multisite_Global_Search extends WP_Widget {
 	 */
 	function form( $instance ) {
 		/* Set up some default widget settings. */
-		$defaults = array( 'title' => __( 'Global Search', 'ms-global-search' ), 'page' => __( 'globalsearch', 'ms-global-search' ), 'which_form' => self::vertical, 'search_pages' => 0 );
+		$defaults = array( 'title' => __( 'Global Search', 'ms-global-search' ), 'page' => __( 'globalsearch', 'ms-global-search' ), 'which_form' => self::vertical, 'search_pages' => 0, 'hide_options' => 0 );
 		$instance = wp_parse_args( ( array ) $instance, $defaults ); ?>
 		
 		<p>
@@ -52,6 +52,11 @@ class Multisite_Global_Search extends WP_Widget {
 		    <label for="<?php echo $this->get_field_id( 'search_pages' ); ?>"><?php _e( 'Searching by default on pages', 'ms-global-search' ); ?></label>
 		</p>
 		
+		<p>
+            <input type="checkbox" id="<?php echo $this->get_field_id( 'hide_options' ); ?>" name="<?php echo $this->get_field_name( 'hide_options' ); ?>" value="1" <?php if ( $instance['hide_options'] ) echo "checked='checked'"; ?> />
+            <label for="<?php echo $this->get_field_id( 'hide_options' ); ?>"><?php _e( 'Disable search options', 'ms-global-search' ); ?></label>
+        </p>
+		
 		<?php
 	}
 
@@ -66,6 +71,7 @@ class Multisite_Global_Search extends WP_Widget {
 		$instance['page'] = strip_tags( $new_instance['page'] );
 		$instance['which_form'] = strip_tags ( $new_instance['which_form'] );
 		$instance['search_pages'] = strip_tags ( $new_instance['search_pages'] );
+        $instance['hide_options'] = strip_tags ( $new_instance['hide_options'] );
 		
 		return $instance;
 	}
@@ -80,6 +86,7 @@ class Multisite_Global_Search extends WP_Widget {
 		$title = apply_filters( 'widget_title', $instance['title'] );
 		$page = $instance['page'];
 		$search_pages = $instance['search_pages'];
+		$hide_options = $instance['hide_options'];
 		
 		/* Before widget ( defined by themes ). */
 		echo $before_widget;
@@ -90,16 +97,16 @@ class Multisite_Global_Search extends WP_Widget {
 		}
 		
 		if( $instance['which_form'] == self::horizontal ) {
-			$this->ms_global_search_horizontal_form( $page, $search_pages );
+			$this->ms_global_search_horizontal_form( $page, $search_pages, $hide_options );
 		} else {
-			$this->ms_global_search_vertical_form( $page, $search_pages );
+			$this->ms_global_search_vertical_form( $page, $search_pages, $hide_options );
 		}
 		
 		/* After widget ( defined by themes ). */
 	   echo $after_widget;
 	}
 	
-	function ms_global_search_vertical_form( $page, $search_pages ) {
+	function ms_global_search_vertical_form( $page, $search_pages, $hide_options ) {
 		if( isset( $this ) ) {
 		    $id_base = $this->id_base;
 		} else {
@@ -113,23 +120,28 @@ class Multisite_Global_Search extends WP_Widget {
 			    <input class="ms-global-search_vbox" name="mssearch" type="text" value="" size="16" tabindex="1" />
 			    <input type="submit" class="button" value="<?php _e( 'Search', 'ms-global-search' )?>" tabindex="2" />
 			    
-			    <p <?php if( $search_pages ) echo 'style="display: none"'?>>
-			        <input title="<?php _e( 'Search on pages', 'ms-global-search' ); ?>" type="checkbox" id="<?php echo $id_base.'_'.$rand2 ?>" name="msp" value="1" <?php if( $search_pages ) echo 'checked="checked"'; ?> />
-			        <?php _e( 'Search on pages', 'ms-global-search' ); ?>
-			    </p>
-			    
-			    <?php if( get_current_user_id() != 0 ) { ?>
-			    <p>
-			    	<input title="<?php _e( 'Search on all blogs', 'ms-global-search' ); ?>" type="radio" id="<?php echo $id_base.'_'.$rand ?>" name="mswhere" value="all" checked='checked' /><?php _e( 'All', 'ms-global-search' ); ?>
-					<input title="<?php _e( 'Search only on blogs where I\'m a member', 'ms-global-search' ); ?>" type="radio" id="<?php echo $id_base.'_'.$rand ?>" name="mswhere" value="my" /><?php _e( 'Blogs where I\'m a member', 'ms-global-search' ); ?>
-			    </p>
-		    <?php } ?>
+			    <?php if( $hide_options ) { ?>
+			        <input title="<?php _e( 'Search on pages', 'ms-global-search' ); ?>" type="hidden" id="<?php echo $id_base.'_'.$rand2 ?>" name="msp" value="1" checked="checked" />
+                    <input title="<?php _e( 'Search on all blogs', 'ms-global-search' ); ?>" type="hidden" id="<?php echo $id_base.'_'.$rand ?>" name="mswhere" value="all" checked='checked' />
+                <?php } else { ?>
+    			    <p <?php if( $search_pages ) echo 'style="display: none"'?>>
+    			        <input title="<?php _e( 'Search on pages', 'ms-global-search' ); ?>" type="checkbox" id="<?php echo $id_base.'_'.$rand2 ?>" name="msp" value="1" <?php if( $search_pages ) echo 'checked="checked"'; ?> />
+    			        <?php _e( 'Search on pages', 'ms-global-search' ); ?>
+    			    </p>
+    			    
+    			    <?php if( get_current_user_id() != 0 ) { ?>
+    			    <p>
+    			    	<input title="<?php _e( 'Search on all blogs', 'ms-global-search' ); ?>" type="radio" id="<?php echo $id_base.'_'.$rand ?>" name="mswhere" value="all" checked='checked' /><?php _e( 'All', 'ms-global-search' ); ?>
+    					<input title="<?php _e( 'Search only on blogs where I\'m a member', 'ms-global-search' ); ?>" type="radio" id="<?php echo $id_base.'_'.$rand ?>" name="mswhere" value="my" /><?php _e( 'Blogs where I\'m a member', 'ms-global-search' ); ?>
+    			    </p>
+    			    <?php } ?>
+    	        <?php } ?>
 		    </div>
 	    </form>
 	<?php
 	}
 		
-	function ms_global_search_horizontal_form( $page, $search_pages ) {
+	function ms_global_search_horizontal_form( $page, $search_pages, $hide_options ) {
 		if( isset( $this ) ) {
 		    $id_base = $this->id_base;
 		} else {
@@ -142,15 +154,20 @@ class Multisite_Global_Search extends WP_Widget {
 			    <span><?php _e( 'Search across all blogs:', 'ms-global-search' ) ?>&nbsp;</span>
 			    <input class="ms-global-search_hbox" name="mssearch" type="text" value="" size="16" tabindex="1" />
 			    <input type="submit" class="button" value="<?php _e( 'Search', 'ms-global-search' ) ?>" tabindex="2" />
-                    
-                <span <?php if( $search_pages ) echo 'style="display: none"'?>>
-                    <input title="<?php _e( 'Search on pages', 'ms-global-search' ); ?>" type="checkbox" id="<?php echo $id_base.'_'.$rand2 ?>" name="msp" value="1" <?php if( $search_pages ) echo 'checked="checked"'; ?> />
-                    <?php _e( 'Search on pages', 'ms-global-search' ); ?>
-                </span>
                 
-		        <?php if( get_current_user_id() != 0 ) { ?>
-			    <input title="<?php _e( 'Search on all blogs', 'ms-global-search' ); ?>" type="radio" id="<?php echo $id_base.'_'.$rand ?>" name="mswhere" value="all" checked='checked'><?php _e( 'All', 'ms-global-search' ); ?>
-				<input title="<?php _e( 'Search only on blogs where I\'m a member', 'ms-global-search' ); ?>" type="radio" id="<?php echo $id_base.'_'.$rand ?>" name="mswhere" value="my"><?php _e( 'Blogs where I\'m a member', 'ms-global-search' ); ?>
+                <?php if( $hide_options ) { ?>
+                    <input title="<?php _e( 'Search on pages', 'ms-global-search' ); ?>" type="hidden" id="<?php echo $id_base.'_'.$rand2 ?>" name="msp" value="1" checked="checked" />
+                    <input title="<?php _e( 'Search on all blogs', 'ms-global-search' ); ?>" type="hidden" id="<?php echo $id_base.'_'.$rand ?>" name="mswhere" value="all" checked='checked' />
+                <?php } else { ?>
+                    <span <?php if( $search_pages ) echo 'style="display: none"'?>>
+                        <input title="<?php _e( 'Search on pages', 'ms-global-search' ); ?>" type="checkbox" id="<?php echo $id_base.'_'.$rand2 ?>" name="msp" value="1" <?php if( $search_pages ) echo 'checked="checked"'; ?> />
+                        <?php _e( 'Search on pages', 'ms-global-search' ); ?>
+                    </span>
+                    
+    		        <?php if( get_current_user_id() != 0 ) { ?>
+    			    <input title="<?php _e( 'Search on all blogs', 'ms-global-search' ); ?>" type="radio" id="<?php echo $id_base.'_'.$rand ?>" name="mswhere" value="all" checked='checked'><?php _e( 'All', 'ms-global-search' ); ?>
+    				<input title="<?php _e( 'Search only on blogs where I\'m a member', 'ms-global-search' ); ?>" type="radio" id="<?php echo $id_base.'_'.$rand ?>" name="mswhere" value="my"><?php _e( 'Blogs where I\'m a member', 'ms-global-search' ); ?>
+                    <?php } ?>
                 <?php } ?>
 		    </div>
 	    </form>

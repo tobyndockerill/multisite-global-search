@@ -161,7 +161,7 @@ if( !function_exists( 'ms_global_search_page' ) ) {
 		
 		extract( shortcode_atts( array( 'excerpt' => 'no' ), $atts ) );
 		
-		$term = apply_filters( 'get_search_query', get_query_var( 'mssearch' ) );
+		$term = strip_tags( apply_filters( 'get_search_query', get_query_var( 'mssearch' ) ) );
 	
 		if( !empty( $term ) ) {
 			$wheresearch = '';
@@ -205,9 +205,16 @@ if( !function_exists( 'ms_global_search_page' ) ) {
 				<h3 class='globalpage_title center'><?php _e( "Not found", 'ms-global-search' ) ?> <span class='ms-global-search_term'><?php echo $term; ?></span><?php if( !empty( $wheresearch ) ) echo " ".__( 'in your blogs', 'ms-global-search' ); ?>.</h3>
 				<p class='globalpage_message center'><?php _e( "Sorry, but you are looking for something that isn't here.", 'ms-global-search' ) ?></p>
 			<?php
-	        } else { ?>
-	        	<p><?php echo count( $search )." ".__( 'matches with', 'ms-global-search' ) ?> <span class='ms-global-search_term'><?php echo $term; ?></span><?php if( !empty( $wheresearch ) ) echo " ".__( 'in your blogs', 'ms-global-search' ); ?>.</p>
-	        <?php
+	        } else {
+	        	$countResult = count( $search );
+                if($countResult < 2){
+                    echo '<p>'.$countResult." ".__( 'match with', 'ms-global-search' )." ";
+                }else{
+                    echo '<p>'.$countResult." ".__( 'matches with', 'ms-global-search' )." ";
+                } ?>
+                <span class='ms-global-search_term'><?php echo $term; ?></span><?php if( !empty( $wheresearch ) ) echo " ".__( 'in your blogs', 'ms-global-search' ); ?>.</p>
+                
+                <?php
 	            $blogid = '';
 	            foreach( $search as $s ) {
 	                $author = get_userdata( $s->post_author );
@@ -254,7 +261,7 @@ if( !function_exists( 'ms_global_search_form' ) ) {
 	function ms_global_search_form( $atts ) {
 		global $wp_query, $wpdb;
 		
-		extract( shortcode_atts( array( 'type' => 'vertical', 'page' => __( 'globalsearch', 'ms-global-search' ), 'search_on_pages' => 0 ), $atts ) );
+		extract( shortcode_atts( array( 'type' => 'vertical', 'page' => __( 'globalsearch', 'ms-global-search' ), 'search_on_pages' => 0, 'hide_options' => 0 ), $atts ) );
 		
 		$rand = rand();
 		if( strcmp( $type, 'horizontal' ) == 0 ) { ?>
@@ -264,15 +271,20 @@ if( !function_exists( 'ms_global_search_form' ) ) {
 				    <input class="ms-global-search_hbox" name="mssearch" type="text" value="" size="16" tabindex="1" />
 				    <input type="submit" class="button" value="<?php _e( 'Search', 'ms-global-search' ) ?>" tabindex="2" />
 	                
-	                <span <?php if( $search_on_pages ) echo 'style="display: none"'?>>
-	                    <input title="<?php _e( 'Search on pages', 'ms-global-search' ); ?>" type="checkbox" id="<?php echo $id_base.'_'.$rand2 ?>" name="msp" value="1" <?php if( $search_on_pages ) echo 'checked="checked"'; ?> />
-	                    <?php _e( 'Search on pages', 'ms-global-search' ); ?>
-	                </span>
-	                
-	                <?php if( get_current_user_id() != 0 ) { ?>
-				    <input title="<?php _e( 'Search on all blogs', 'ms-global-search' ); ?>" type="radio" id="<?php echo "ms-global-search-form-".$rand ?>" name="mswhere" value="all" checked='checked'><?php _e( 'All', 'ms-global-search' ); ?>
-					<input title="<?php _e( 'Search only on blogs where I\'m a member', 'ms-global-search' ); ?>" type="radio" id="<?php echo "ms-global-search-form-".$rand ?>" name="mswhere" value="my"><?php _e( 'Blogs where I\'m a member', 'ms-global-search' ); ?>
-			        <?php } ?>
+	                <?php if( $hide_options ) { ?>
+                        <input title="<?php _e( 'Search on pages', 'ms-global-search' ); ?>" type="hidden" id="<?php echo $id_base.'_'.$rand2 ?>" name="msp" value="1" checked="checked" />
+                        <input title="<?php _e( 'Search on all blogs', 'ms-global-search' ); ?>" type="hidden" id="<?php echo $id_base.'_'.$rand ?>" name="mswhere" value="all" checked='checked' />
+                    <?php } else { ?>
+    	                <span <?php if( $search_on_pages ) echo 'style="display: none"'?>>
+    	                    <input title="<?php _e( 'Search on pages', 'ms-global-search' ); ?>" type="checkbox" id="<?php echo $id_base.'_'.$rand2 ?>" name="msp" value="1" <?php if( $search_on_pages ) echo 'checked="checked"'; ?> />
+    	                    <?php _e( 'Search on pages', 'ms-global-search' ); ?>
+    	                </span>
+    	                
+    	                <?php if( get_current_user_id() != 0 ) { ?>
+    				    <input title="<?php _e( 'Search on all blogs', 'ms-global-search' ); ?>" type="radio" id="<?php echo "ms-global-search-form-".$rand ?>" name="mswhere" value="all" checked='checked'><?php _e( 'All', 'ms-global-search' ); ?>
+    					<input title="<?php _e( 'Search only on blogs where I\'m a member', 'ms-global-search' ); ?>" type="radio" id="<?php echo "ms-global-search-form-".$rand ?>" name="mswhere" value="my"><?php _e( 'Blogs where I\'m a member', 'ms-global-search' ); ?>
+    			        <?php } ?>
+    			    <?php } ?>
 			    </div>
 		    </form>
 		<?php
@@ -283,18 +295,23 @@ if( !function_exists( 'ms_global_search_form' ) ) {
 				    <input class="ms-global-search_vbox" name="mssearch" type="text" value="" size="16" tabindex="1" />
 				    <input type="submit" class="button" value="<?php _e( 'Search', 'ms-global-search' )?>" tabindex="2" />
 				    
-				    <p <?php if( $search_on_pages ) echo 'style="display: none"'?>>
-				        <input title="<?php _e( 'Search on pages', 'ms-global-search' ); ?>" type="checkbox" id="<?php echo $id_base.'_'.$rand2 ?>" name="msp" value="1" <?php if( $search_on_pages ) echo 'checked="checked"'; ?> />
-				        <?php _e( 'Search on pages', 'ms-global-search' ); ?>
-				    </p>
-                    
-                    <?php if( get_current_user_id() != 0 ) { ?>
-				    <p>
-                        <input title="<?php _e( 'Search on all blogs', 'ms-global-search' ); ?>" type="radio" id="<?php echo "ms-global-search-form-".$rand ?>" name="mswhere" value="all" checked='checked'><?php _e( 'All', 'ms-global-search' ); ?>
-						<br />
-                        <input title="<?php _e( 'Search only on blogs where I\'m a member', 'ms-global-search' ); ?>" type="radio" id="<?php echo "ms-global-search-form-".$rand ?>" name="mswhere" value="my"><?php _e( 'Blogs where I\'m a member', 'ms-global-search' ); ?>
-                    </p>
-				    <?php } ?>
+				    <?php if( $hide_options ) { ?>
+                        <input title="<?php _e( 'Search on pages', 'ms-global-search' ); ?>" type="hidden" id="<?php echo $id_base.'_'.$rand2 ?>" name="msp" value="1" checked="checked" />
+                        <input title="<?php _e( 'Search on all blogs', 'ms-global-search' ); ?>" type="hidden" id="<?php echo $id_base.'_'.$rand ?>" name="mswhere" value="all" checked='checked' />
+                    <?php } else { ?>
+    				    <p <?php if( $search_on_pages ) echo 'style="display: none"'?>>
+    				        <input title="<?php _e( 'Search on pages', 'ms-global-search' ); ?>" type="checkbox" id="<?php echo $id_base.'_'.$rand2 ?>" name="msp" value="1" <?php if( $search_on_pages ) echo 'checked="checked"'; ?> />
+    				        <?php _e( 'Search on pages', 'ms-global-search' ); ?>
+    				    </p>
+                        
+                        <?php if( get_current_user_id() != 0 ) { ?>
+    				    <p>
+                            <input title="<?php _e( 'Search on all blogs', 'ms-global-search' ); ?>" type="radio" id="<?php echo "ms-global-search-form-".$rand ?>" name="mswhere" value="all" checked='checked'><?php _e( 'All', 'ms-global-search' ); ?>
+    						<br />
+                            <input title="<?php _e( 'Search only on blogs where I\'m a member', 'ms-global-search' ); ?>" type="radio" id="<?php echo "ms-global-search-form-".$rand ?>" name="mswhere" value="my"><?php _e( 'Blogs where I\'m a member', 'ms-global-search' ); ?>
+                        </p>
+    				    <?php } ?>
+    				<?php } ?>
 			    </div>
 			</form>
 		<?php

@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Multisite Global Search 1.2.5\n"
+"Project-Id-Version: Multisite Global Search 1.2.6\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/multisite-global-search\n"
-"POT-Creation-Date: 2011-03-21 02:55+0100\n"
-"PO-Revision-Date: 2011-03-21 03:01+0100\n"
+"POT-Creation-Date: 2011-09-26 00:33+0200\n"
+"PO-Revision-Date: 2011-09-26 01:01+0100\n"
 "Last-Translator: Alicia García Holgado <alicia.alicia1986gh@gmail.com>\n"
 "Language-Team: Alicia García Holgado <aliciagh@usal.es>\n"
 "MIME-Version: 1.0\n"
@@ -23,7 +23,7 @@ msgid "Global Search"
 msgstr "Global Search"
 
 #: inc/class.widgets.php:29
-#: inc/shortcodes.php:257
+#: inc/shortcodes.php:264
 msgid "globalsearch"
 msgstr "globalsearch"
 
@@ -51,56 +51,68 @@ msgstr "Vertical"
 msgid "Searching by default on pages"
 msgstr "Buscar por defecto en las páginas"
 
-#: inc/class.widgets.php:112
-#: inc/class.widgets.php:142
-#: inc/shortcodes.php:263
-#: inc/shortcodes.php:282
+#: inc/class.widgets.php:57
+msgid "Disable search options"
+msgstr "Ocultar opciones de búsqueda"
+
+#: inc/class.widgets.php:119
+#: inc/class.widgets.php:154
+#: inc/shortcodes.php:270
+#: inc/shortcodes.php:294
 msgid "Search across all blogs:"
 msgstr "Buscar en todos los blogs:"
 
-#: inc/class.widgets.php:114
-#: inc/class.widgets.php:144
-#: inc/shortcodes.php:265
-#: inc/shortcodes.php:284
+#: inc/class.widgets.php:121
+#: inc/class.widgets.php:156
+#: inc/shortcodes.php:272
+#: inc/shortcodes.php:296
 msgid "Search"
 msgstr "Buscar"
 
-#: inc/class.widgets.php:117
-#: inc/class.widgets.php:118
-#: inc/class.widgets.php:147
-#: inc/class.widgets.php:148
-#: inc/shortcodes.php:268
-#: inc/shortcodes.php:269
-#: inc/shortcodes.php:287
-#: inc/shortcodes.php:288
+#: inc/class.widgets.php:124
+#: inc/class.widgets.php:128
+#: inc/class.widgets.php:129
+#: inc/class.widgets.php:159
+#: inc/class.widgets.php:163
+#: inc/class.widgets.php:164
+#: inc/shortcodes.php:275
+#: inc/shortcodes.php:279
+#: inc/shortcodes.php:280
+#: inc/shortcodes.php:299
+#: inc/shortcodes.php:303
+#: inc/shortcodes.php:304
 msgid "Search on pages"
 msgstr "Buscar en páginas"
 
-#: inc/class.widgets.php:123
-#: inc/class.widgets.php:152
-#: inc/shortcodes.php:273
-#: inc/shortcodes.php:293
+#: inc/class.widgets.php:125
+#: inc/class.widgets.php:134
+#: inc/class.widgets.php:160
+#: inc/class.widgets.php:168
+#: inc/shortcodes.php:276
+#: inc/shortcodes.php:284
+#: inc/shortcodes.php:300
+#: inc/shortcodes.php:309
 msgid "Search on all blogs"
 msgstr "Buscar en todos los blogs"
 
-#: inc/class.widgets.php:123
-#: inc/class.widgets.php:152
-#: inc/shortcodes.php:273
-#: inc/shortcodes.php:293
+#: inc/class.widgets.php:134
+#: inc/class.widgets.php:168
+#: inc/shortcodes.php:284
+#: inc/shortcodes.php:309
 msgid "All"
 msgstr "Todo"
 
-#: inc/class.widgets.php:124
-#: inc/class.widgets.php:153
-#: inc/shortcodes.php:274
-#: inc/shortcodes.php:295
+#: inc/class.widgets.php:135
+#: inc/class.widgets.php:169
+#: inc/shortcodes.php:285
+#: inc/shortcodes.php:311
 msgid "Search only on blogs where I'm a member"
 msgstr "Buscar sólo en los blogs a los que pertenezco"
 
-#: inc/class.widgets.php:124
-#: inc/class.widgets.php:153
-#: inc/shortcodes.php:274
-#: inc/shortcodes.php:295
+#: inc/class.widgets.php:135
+#: inc/class.widgets.php:169
+#: inc/shortcodes.php:285
+#: inc/shortcodes.php:311
 msgid "Blogs where I'm a member"
 msgstr "Blogs a los que pertenezco"
 
@@ -166,29 +178,33 @@ msgid "1 Comment"
 msgstr "1 Comentario"
 
 #: inc/shortcodes.php:205
-#: inc/shortcodes.php:246
+#: inc/shortcodes.php:253
 msgid "Not found"
 msgstr "No encontrado"
 
 #: inc/shortcodes.php:205
-#: inc/shortcodes.php:209
+#: inc/shortcodes.php:215
 msgid "in your blogs"
 msgstr "en tus blogs"
 
 #: inc/shortcodes.php:206
-#: inc/shortcodes.php:247
+#: inc/shortcodes.php:254
 msgid "Sorry, but you are looking for something that isn't here."
 msgstr "Lo sentimos pero no se han encontrado coincidencias."
 
-#: inc/shortcodes.php:209
+#: inc/shortcodes.php:211
+msgid "match with"
+msgstr "coincidencia con"
+
+#: inc/shortcodes.php:213
 msgid "matches with"
 msgstr "coincidencias con"
 
-#: inc/shortcodes.php:223
+#: inc/shortcodes.php:230
 msgid "Permanent Link to"
 msgstr "Enlace permanente a"
 
-#: inc/shortcodes.php:226
+#: inc/shortcodes.php:233
 msgid "j/m/y, G:i"
 msgstr "j/m/y, G:i"
 

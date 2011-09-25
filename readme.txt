@@ -2,8 +2,8 @@
 Contributors: aliciagh
 Tags: search, multisite, buddypress, widget, multilingual, global, shortcode
 Requires at least: 3.0
-Tested up to: 3.1
-Stable tag: 1.2.5
+Tested up to: 3.1.4
+Stable tag: 1.2.6
 
 Adds the ability to search through blogs into your WordPress Multisite installation. Based on my other plugin WPMU GLobal Search.
 
@@ -15,8 +15,10 @@ This plugin is based on my other global search plugin, [WPMU Global Search](http
 Currently in the following languages:
 
 * English
+* German (de_DE) by Dennis Vorpahl
 * French (fr_FR) by Fabrice Perrinel
 * Norwegian Bokmal (nb_NO) by Tore Johnny BraÌŠtveit
+* Portuguese (pt_PT) by JosŽ Anjos
 * Russian (ru_RU) by Sam Savinov
 * Spanish (es_ES)
 
@@ -28,6 +30,7 @@ If you have created your own language pack, or have an update of an existing one
 * Search across all network blogs or only in your blogs if you are logged.
 * Search on pages.
 * Administrative choice to perform searches by default on pages.
+* Administrative choice to disable search options.
 * Search results are showed in a page which contents the shortcode: `[multisite_search_result]`
 * Show excerpted results `[multisite_search_result excerpt="yes"]`
 * Entries on every site across your installation appear in search results immediately after publication.
@@ -107,12 +110,18 @@ Default attribute value is `0`.
 
 == Changelog ==
 
+= 1.2.6 =
+* Fixed: SQL injection and XSS vulnerability
+* Added: Portuguese language pack
+* Added: German language pack
+* Added: Administrative choice to disable search options
+
 = 1.2.5 =
 * Fixed: error message "The used SELECT statements have a different number of columns"
 * Fixed: show up private posts
 * Added: French language pack
 * Added: Norwegian Bokmal language pack
-* Changed: Administrative choice to perform searches by default on pages.
+* Changed: Administrative choice to perform searches by default on pages
 
 = 1.2.4 =
 * Fixed: empty excerpts
@@ -148,6 +157,9 @@ Default attribute value is `0`.
 * Fixed: style for results page
 
 == Upgrade Notice ==
+
+= 1.2.6 =
+IMPORTANT!! Fixing a vulnerability. Update your plugin.
 
 = 1.2.5 =
 Important! Fixing error message "The used SELECT statements have a different number of columns". French and Norwegian Bokmal translation.
