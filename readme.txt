@@ -3,7 +3,7 @@ Contributors: aliciagh
 Tags: search, multisite, buddypress, widget, multilingual, global, shortcode
 Requires at least: 3.0
 Tested up to: 3.1.4
-Stable tag: 1.2.6
+Stable tag: 1.2.7
 
 Adds the ability to search through blogs into your WordPress Multisite installation. Based on my other plugin WPMU GLobal Search.
 
@@ -18,8 +18,9 @@ Currently in the following languages:
 * German (de_DE) by Dennis Vorpahl
 * French (fr_FR) by Fabrice Perrinel
 * Norwegian Bokmal (nb_NO) by Tore Johnny BraÌŠtveit
-* Portuguese (pt_PT) by JosŽ Anjos
+* Portuguese (pt_PT) by Jose Anjos
 * Russian (ru_RU) by Sam Savinov
+* Romanian (ro_RO) by Alexander Ovsov [Web Geek Science](http://webhostinggeeks.com/science/)
 * Spanish (es_ES)
 
 If you have created your own language pack, or have an update of an existing one, you can send [gettext .po and .mo files](http://codex.wordpress.org/Translating_WordPress) to me so that I can bundle it into Multisite Global Search.
@@ -110,6 +111,10 @@ Default attribute value is `0`.
 
 == Changelog ==
 
+= 1.2.7 =
+* Fixed: languages problem
+* Added: Romanian language pack
+
 = 1.2.6 =
 * Fixed: SQL injection and XSS vulnerability
 * Added: Portuguese language pack
@@ -157,6 +162,9 @@ Default attribute value is `0`.
 * Fixed: style for results page
 
 == Upgrade Notice ==
+
+= 1.2.7 =
+Include languages files and Romanian language pack.
 
 = 1.2.6 =
 IMPORTANT!! Fixing a vulnerability. Update your plugin.

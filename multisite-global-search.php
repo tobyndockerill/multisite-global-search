@@ -3,7 +3,7 @@
  * Plugin Name: Multisite Global Search
  * Plugin URI: http://grial.usal.es/agora/pfcgrial/multisite-search
  * Description: Adds the ability to search through blogs into your WordPress Multisite installation. Based on my other plugin WPMU GLobal Search.
- * Version: 1.2.6
+ * Version: 1.2.7
  * Requires at least: WordPress 3.0
  * Tested up to: WordPress 3.1.4
  * Author: Alicia García Holgado
