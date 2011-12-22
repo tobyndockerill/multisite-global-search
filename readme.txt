@@ -2,16 +2,15 @@
 Contributors: aliciagh
 Tags: search, multisite, buddypress, widget, multilingual, global, shortcode
 Requires at least: 3.0
-Tested up to: 3.1.4
-Stable tag: 1.2.7
+Tested up to: 3.3
+Stable tag: 1.2.8
 
-Adds the ability to search through blogs into your WordPress Multisite installation. Based on my other plugin WPMU GLobal Search.
+Adds the ability to search through blogs into your WordPress Multisite installation.
 
 == Description ==
 
 Easily search through all blogs into your WordPress Multisite by post title, post content or post author.
 Multisite Global Search doesn't work with single WordPress installation and it must be activated for all sites using "network activate" in the Administration Panel.
-This plugin is based on my other global search plugin, [WPMU Global Search](http://wordpress.org/extend/plugins/wpmu-global-search). It has some new features but if you want to keep using the older version of Wordpress MU, you can install my other plugin.
 Currently in the following languages:
 
 * English
@@ -111,6 +110,9 @@ Default attribute value is `0`.
 
 == Changelog ==
 
+= 1.2.8 =
+* Added: search multiple keywords regardless of the order
+
 = 1.2.7 =
 * Fixed: languages problem
 * Added: Romanian language pack
@@ -162,6 +164,9 @@ Default attribute value is `0`.
 * Fixed: style for results page
 
 == Upgrade Notice ==
+
+= 1.2.8 =
+Add support to search multiple keywords regardless of the order.
 
 = 1.2.7 =
 Include languages files and Romanian language pack.

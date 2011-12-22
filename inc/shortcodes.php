@@ -164,7 +164,36 @@ if( !function_exists( 'ms_global_search_page' ) ) {
 		$term = strip_tags( apply_filters( 'get_search_query', get_query_var( 'mssearch' ) ) );
 	
 		if( !empty( $term ) ) {
-			$wheresearch = '';
+		    // Literal keyword
+            if( preg_match( '/^\"(.*?)\"$/', stripslashes($term) , $termmatch) ) {
+                if( !empty( $termmatch[1] ) ) {
+                    $termsearch = "( post_title LIKE '%%".$termmatch[1]."%%' OR post_content LIKE '%%".$termmatch[1]."%%' OR ".$wpdb->users.".display_name LIKE '%%".$termmatch[1]."%%' ) ";
+                } else { ?>
+                    <h3 class='globalpage_title center'><?php _e( "Not found", 'ms-global-search' ) ?></h3>
+                    <p class='globalpage_message center'><?php _e( "Sorry, but you are looking for something that isn't here.", 'ms-global-search' ) ?></p>
+                <?php
+                }
+            } else {
+                // Multiple keywords
+                $multipleterms = explode ( " ", $term );
+                if( count($multipleterms) != 1 ) {
+                    $termsearch = "( ";
+                    $totalterms = count($multipleterms);
+                    $numterms = 1;
+                    foreach( $multipleterms as $aterm ) {
+                        if( $numterms < $totalterms ) {
+                            $termsearch .= " ( post_title LIKE '%%".$aterm."%%' OR post_content LIKE '%%".$aterm."%%' OR ".$wpdb->users.".display_name LIKE '%%".$aterm."%%' ) AND ";
+                        } else {
+                            $termsearch .= "( post_title LIKE '%%".$aterm."%%' OR post_content LIKE '%%".$aterm."%%' OR ".$wpdb->users.".display_name LIKE '%%".$aterm."%%' ) )";
+                        }
+                        $numterms++;
+                    }
+                } else {
+                    $termsearch = "( post_title LIKE '%%".$term."%%' OR post_content LIKE '%%".$term."%%' OR ".$wpdb->users.".display_name LIKE '%%".$term."%%' ) ";
+                }
+            }
+            
+		    $wheresearch = '';
 			// Search only on user blogs.
 			$userid = get_current_user_id();
 			if( strcmp( apply_filters ( 'get_search_query', get_query_var( 'mswhere' ) ), 'my' ) == 0 && $userid != 0 ) {
@@ -190,11 +219,11 @@ if( !function_exists( 'ms_global_search_page' ) ) {
 			// Show private posts
 			if ($userid != 0) {
     			$request = $wpdb->prepare( "SELECT ".$wpdb->base_prefix."v_posts.* from ".$wpdb->base_prefix."v_posts left join ".$wpdb->users." on ".$wpdb->users.".ID=".$wpdb->base_prefix."v_posts.post_author ".
-    			"where ".$wheresearch." ( post_title LIKE '%%".$term."%%' OR post_content LIKE '%%".$term."%%' OR ".$wpdb->users.".display_name LIKE '%%".$term."%%' )".
+    			"where ".$wheresearch." ".$termsearch.
     		    "AND ( post_status = 'publish' OR post_status = 'private' ) AND ".$post_type." ORDER BY ".$wpdb->base_prefix."v_posts.blog_id ASC, ".$wpdb->base_prefix."v_posts.post_date DESC, ".$wpdb->base_prefix."v_posts.comment_count DESC" );
 			} else {
   		        $request = $wpdb->prepare( "SELECT ".$wpdb->base_prefix."v_posts.* from ".$wpdb->base_prefix."v_posts left join ".$wpdb->users." on ".$wpdb->users.".ID=".$wpdb->base_prefix."v_posts.post_author ".
-                "where ".$wheresearch." ( post_title LIKE '%%".$term."%%' OR post_content LIKE '%%".$term."%%' OR ".$wpdb->users.".display_name LIKE '%%".$term."%%' )".
+                "where ".$wheresearch." ".$termsearch.
                 "AND post_status = 'publish' AND ".$post_type." ORDER BY ".$wpdb->base_prefix."v_posts.blog_id ASC, ".$wpdb->base_prefix."v_posts.post_date DESC, ".$wpdb->base_prefix."v_posts.comment_count DESC" );
 			}
 			
@@ -202,7 +231,7 @@ if( !function_exists( 'ms_global_search_page' ) ) {
 	        
 			// Show search results.
 			if( empty( $search ) ) { ?>
-				<h3 class='globalpage_title center'><?php _e( "Not found", 'ms-global-search' ) ?> <span class='ms-global-search_term'><?php echo $term; ?></span><?php if( !empty( $wheresearch ) ) echo " ".__( 'in your blogs', 'ms-global-search' ); ?>.</h3>
+				<h3 class='globalpage_title center'><?php _e( "Not found", 'ms-global-search' ) ?> <span class='ms-global-search_term'><?php echo stripslashes($term); ?></span><?php if( !empty( $wheresearch ) ) echo " ".__( 'in your blogs', 'ms-global-search' ); ?>.</h3>
 				<p class='globalpage_message center'><?php _e( "Sorry, but you are looking for something that isn't here.", 'ms-global-search' ) ?></p>
 			<?php
 	        } else {
@@ -212,7 +241,7 @@ if( !function_exists( 'ms_global_search_page' ) ) {
                 }else{
                     echo '<p>'.$countResult." ".__( 'matches with', 'ms-global-search' )." ";
                 } ?>
-                <span class='ms-global-search_term'><?php echo $term; ?></span><?php if( !empty( $wheresearch ) ) echo " ".__( 'in your blogs', 'ms-global-search' ); ?>.</p>
+                <span class='ms-global-search_term'><?php echo stripslashes($term); ?></span><?php if( !empty( $wheresearch ) ) echo " ".__( 'in your blogs', 'ms-global-search' ); ?>.</p>
                 
                 <?php
 	            $blogid = '';
