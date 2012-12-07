@@ -3,7 +3,7 @@ Contributors: aliciagh
 Tags: search, multisite, buddypress, widget, multilingual, global, shortcode
 Requires at least: 3.0
 Tested up to: 3.3
-Stable tag: 1.2.8
+Stable tag: 1.2.9
 
 Adds the ability to search through blogs into your WordPress Multisite installation.
 
@@ -20,6 +20,7 @@ Currently in the following languages:
 * Portuguese (pt_PT) by Jose Anjos
 * Russian (ru_RU) by Sam Savinov
 * Romanian (ro_RO) by Alexander Ovsov [Web Geek Science](http://webhostinggeeks.com/science/)
+* Slovak (sk_SK) by Branco [WebHostingGeeks.com](http://webhostinggeeks.com/blog/)
 * Spanish (es_ES)
 
 If you have created your own language pack, or have an update of an existing one, you can send [gettext .po and .mo files](http://codex.wordpress.org/Translating_WordPress) to me so that I can bundle it into Multisite Global Search.
@@ -119,6 +120,9 @@ You have to copy the CSS code from the stylesheet in the Multisite Global Search
 3. Horizontal Global Search widget.
 
 == Changelog ==
+
+= 1.2.9 =
+* Added: Slovak language pack
 
 = 1.2.8 =
 * Added: search multiple keywords regardless of the order
