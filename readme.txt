@@ -2,8 +2,8 @@
 Contributors: aliciagh
 Tags: search, multisite, buddypress, widget, multilingual, global, shortcode
 Requires at least: 3.0
-Tested up to: 3.3
-Stable tag: 1.2.9
+Tested up to: 3.5.1
+Stable tag: 1.2.10
 
 Adds the ability to search through blogs into your WordPress Multisite installation.
 
@@ -16,6 +16,7 @@ Currently in the following languages:
 * English
 * German (de_DE) by Dennis Vorpahl
 * French (fr_FR) by Fabrice Perrinel
+* Italian (it_IT) by Davide Tommasin
 * Norwegian Bokmal (nb_NO) by Tore Johnny Bråtveit
 * Portuguese (pt_PT) by Jose Anjos
 * Russian (ru_RU) by Sam Savinov
@@ -120,6 +121,9 @@ You have to copy the CSS code from the stylesheet in the Multisite Global Search
 3. Horizontal Global Search widget.
 
 == Changelog ==
+
+= 1.2.10 =
+* Added: Italian language pack
 
 = 1.2.9 =
 * Added: Slovak language pack
