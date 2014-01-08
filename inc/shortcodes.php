@@ -39,7 +39,7 @@ function ms_global_search_get_the_excerpt( $s ) {
 		$excerpt = $s->post_content;
 
 		$excerpt = strip_shortcodes( $excerpt );
-
+		$excerpt = preg_replace("/<img[^>]+\>/i", "", $excerpt);
 		$excerpt = apply_filters( 'the_content', $excerpt );
 		$excerpt = str_replace( ']]>', ']]&gt;', $excerpt );
 		$excerpt_length = apply_filters( 'excerpt_length', 55 );
@@ -211,9 +211,9 @@ if( !function_exists( 'ms_global_search_page' ) ) {
 			
 			// Search on pages.
 			if(get_query_var( 'msp' )) {
-                $post_type = "( post_type = 'post' OR post_type = 'page' )";
+                $post_type = "( post_type = 'post' OR post_type = 'page' OR post_type = 'syndication'  )";
 			} else {
-                $post_type = "post_type = 'post'";
+                $post_type = "(post_type = 'post' OR post_type = 'syndication')";
 			}
 			
 			// Show private posts
@@ -266,6 +266,9 @@ if( !function_exists( 'ms_global_search_page' ) ) {
 						</div>
 						
 						<div class="globalsearch_content">
+							<div class="entry_thumbnail">
+								<?php echo get_the_post_thumbnail_by_blog( $s->blog_id, $s->ID, "thumbnail"); ?>
+							</div>
 	                    	<div class="entry">
 	                    		<?php
 	                    		if(strcmp($excerpt, "yes") == 0)
@@ -345,5 +348,56 @@ if( !function_exists( 'ms_global_search_form' ) ) {
 			</form>
 		<?php
 		}
+	}
+}
+if( !function_exists( 'get_the_post_thumbnail_by_blog' ) ) {
+	function get_the_post_thumbnail_by_blog($blog_id=NULL,$post_id=NULL,$size='post-thumbnail',$attrs=NULL) {
+		global $current_blog;
+		$sameblog = false;
+
+		if( empty( $blog_id ) || $blog_id == $current_blog->ID ) {
+			$blog_id = $current_blog->ID;
+			$sameblog = true;
+		}
+		if( empty( $post_id ) ) {
+			global $post;
+			$post_id = $post->ID;
+		}
+		if( $sameblog )
+			return get_the_post_thumbnail( $post_id, $size, $attrs );
+
+		if( !has_post_thumbnail_by_blog($blog_id,$post_id) )
+			return false;
+
+		global $wpdb;
+		$oldblog = $wpdb->set_blog_id( $blog_id );
+
+		$blogdetails = get_blog_details( $blog_id );
+		$thumbcode = str_replace( $current_blog->domain . $current_blog->path, $blogdetails->domain . $blogdetails->path, get_the_post_thumbnail( $post_id, $size, $attrs ) );
+		$thumbcode = str_replace("wp-content/uploads","files",$thumbcode);
+		$wpdb->set_blog_id( $oldblog );
+		return $thumbcode;
+	}
+
+	function has_post_thumbnail_by_blog($blog_id=NULL,$post_id=NULL) {
+		if( empty( $blog_id ) ) {
+			global $current_blog;
+			$blog_id = $current_blog;
+		}
+		if( empty( $post_id ) ) {
+			global $post;
+			$post_id = $post->ID;
+		}
+
+		global $wpdb;
+		$oldblog = $wpdb->set_blog_id( $blog_id );
+
+		$thumbid = has_post_thumbnail( $post_id );
+		$wpdb->set_blog_id( $oldblog );
+		return ($thumbid !== false) ? true : false;
+	}
+
+	function the_post_thumbnail_by_blog($blog_id=NULL,$post_id=NULL,$size='post-thumbnail',$attrs=NULL) {
+		echo get_the_post_thumbnail_by_blog($blog_id,$post_id,$size,$attrs);
 	}
 }
