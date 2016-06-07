@@ -97,7 +97,7 @@ if ( !function_exists( 'ms_global_search_get_edit_link' ) ) {
 
 		$editlink = apply_filters( 'get_edit_post_link', 'http://'.$s->domain.$s->path.'wp-admin/'.$file.'.php?action=edit&amp;'.$var.'='.$s->ID, $s->ID, $context );
 
-		$link = '<a class="post-edit-link" href="' . $editlink . '" title="' . attribute_escape( __( 'Edit post', 'ms-global-search' ) ) . '">'. __( 'Edit' , 'ms-global-search' ) .'</a>';
+		$link = '<a class="post-edit-link" href="' . $editlink . '" title="' . esc_attr( __( 'Edit post', 'ms-global-search' ) ) . '">'. __( 'Edit' , 'ms-global-search' ) .'</a>';
 		return $before . apply_filters( 'edit_post_link', $link, $s->ID ) . $after;
 	}
 }
@@ -137,7 +137,7 @@ if ( !function_exists( 'ms_global_search_get_comments_link' ) ) {
 		if ( !empty( $css_class ) ) {
 			echo ' class="'.$css_class.'" ';
 		}
-		$title = attribute_escape( $s->post_title );
+		$title = esc_attr( $s->post_title );
 
 		echo apply_filters( 'comments_popup_link_attributes', '' );
 
