@@ -1,32 +1,26 @@
-=== Multisite Global Search ===
-Contributors: aliciagh
+# Multisite Global Search
+Contributors: aliciagh, innovatordm, tobyndockerill
 Tags: search, multisite, buddypress, widget, multilingual, global, shortcode
-Requires at least: 3.0
-Tested up to: 3.5.2
-Stable tag: 1.2.11
+Requires at least: 4.0
+Tested up to: 4.5.2
+Stable tag: 2.0.0
 
 Adds the ability to search through blogs into your WordPress Multisite installation.
 
-== Description ==
+## Note
+This is a **major re-write** of Alicia García Holgado's original code and is therefore incompatible in many ways (including severely-limited language support).
 
-Easily search through all blogs into your WordPress Multisite by post title, post content or post author.
-Multisite Global Search doesn't work with single WordPress installation and it must be activated for all sites using "network activate" in the Administration Panel.
+If you need these features please support the original development of the plugin via the [Network page](https://github.com/tobyndockerill/multisite-global-search/network).
+
+## Description
+
+Easily search through all blogs into your WordPress Multisite by post title, post content or post
+author.
+Multisite Global Search doesn't work with single WordPress installation and it must be activated
+for all sites using "network activate" in the Administration Panel.
 Currently in the following languages:
 
 * English
-* German (de_DE) by Dennis Vorpahl
-* French (fr_FR) by Fabrice Perrinel
-* Italian (it_IT) by Davide Tommasin
-* Norwegian Bokmal (nb_NO) by Tore Johnny Bråtveit
-* Portuguese (pt_PT) by Jose Anjos
-* Russian (ru_RU) by Sam Savinov
-* Romanian (ro_RO) by Alexander Ovsov [Web Hosting Geek Science](http://webhostinggeeks.com/science/)
-* Serbian (sr_RS) by Andrijana Nikolic [Web Hosting Geeks] http://science.webhostinggeeks.com/multisite-global-search
-* Slovak (sk_SK) by Branco [Web Hosting Geeks](http://webhostinggeeks.com/blog/)
-* Spanish (es_ES)
-
-If you have created your own language pack, or have an update of an existing one, you can send [gettext .po and .mo files](http://codex.wordpress.org/Translating_WordPress) to me so that I can bundle it into Multisite Global Search.
-
 ** Features **
 
 * Multisite Global Search Widget. Show a search form in your sidebar.
@@ -40,10 +34,10 @@ If you have created your own language pack, or have an update of an existing one
 * Receive results from your complete blog network, even sites you do not own or control.
 * Customizable style sheet for widget and results page.
 * Two different form types, vertical and horizontal.
-* Put search form into your code with `Multisite_Global_Search::ms_global_search_vertical_form(your_results_page)` or `Multisite_Global_Search::ms_global_search_horizontal_form(your_results_page)`
+* Put search form into your code with `MultisiteGlobalSearch::ms_global_search_vertical_form(your_results_page)` or `MultisiteGlobalSearch::ms_global_search_horizontal_form(your_results_page)`
 * Insert search form in templates using the shortcode: `[multisite_search_form]`. [See the plugin page for more information](http://grial.usal.es/agora/pfcgrial/multisite-search).
 
-== Installation ==
+## Installation
 
 **Requeriments**
 
@@ -63,65 +57,64 @@ If you have created your own language pack, or have an update of an existing one
 **Upgrade instructions**
 
 1. Deactivate the plugin in your Administration Panel.
-2. Earlier version to 1.2.2 needs drop tables from the database: drop view yourdatabaseprefix_v_posts; drop view yourdatabaseprefix_v_comments; drop view yourdatabaseprefix_v_postmeta;
+2. Earlier version to 1.2.2 needs drop tables from the database: `drop view yourdatabaseprefix_v_posts; drop view yourdatabaseprefix_v_comments; drop view yourdatabaseprefix_v_postmeta;'
 3. Upgrade the plugin.
 4. Activate the plugin in your Administration Panel.
 5. Activate widget `Multisite Global Search`.
 
-== Frequently Asked Questions ==
+## Frequently Asked Questions
 
 If you have any further questions, please submit them.
 
-= Can the search form be used with a shortcode in templates versus the widget? =
+*Can the search form be used with a shortcode in templates versus the widget?*
 
 Insert search form in templates using the shortcode: `[multisite_search_form]`
 
-= How can show horizontal form using the shortcode? =
+*How can show horizontal form using the shortcode?*
 
-Use `type` attribute to select vertical form or horizontal form. For example: `[multisite_search_form type="horizontal"]`
+Use `type` attribute to select vertical form or horizontal form.
+For example: `[multisite_search_form type="horizontal"]`
 Default attribute value is `vertical`.
 
-= How can change results page URI when you insert search form with the shortcode? =
+*How can change results page URI when you insert search form with the shortcode?*
 
-Use `page` attribute to change results page URI. For example: `[multisite_search_form page="multisite-search"]`. Search results will be showed in http://your_blog_URL/multisite-search.
-Default attribute value is `globalsearch`. 
+Use `page` attribute to change results page URI.
+For example: `[multisite_search_form page="multisite-search"]`.
+Search results will be showed in http://your_blog_URL/multisite-search.
+Default attribute value is `globalsearch`.
 
-= Can I put search form into PHP files using a function? =
+*Can I put search form into PHP files using a function?*
 
-Yes. For example, this is a results page for word 'e-learning': http://grial.usal.es/agora/busqueda/?mssearch=e-learning&msp=1&mswhere=all
+Yes. Using WordPress's `do_shortcode` function, you may reuse the existing shortcode functionality.
 
-In this case, the name of the results page is 'busqueda' so the code that it will have to put in the PHP template must be:
+*Get error "check you have create views privilege in your WordPress database. Illegal mix of collations for operation 'UNION'".*
 
-`<?php Multisite_Global_Search::ms_global_search_vertical_form('busqueda') ?>`
-or
-`<?php Multisite_Global_Search::ms_global_search_horizontal_form('busqueda') ?>`
+The instruction means that you may not have given the necessary priviledges to your MySQL user.
+The user needs to be assigned the ability to "create views".
 
-= Get error "check you have create views privilege in your WordPress database. Illegal mix of collations for operation 'UNION'". =
-
-The instruction means that you may not have given the necessary priviledges to your MySQL user. The user needs to be assigned the ability to "create views".
-
-= Limit results to just the title and the excerpt =
+*Limit results to just the title and the excerpt*
 
 Edit results page and place `[multisite_search_result excerpt="yes"]` in the post content area instead of `[multisite_search_result]`
 
-= Set the plugin to always perform searches also in pages =
+*Set the plugin to always perform searches also in pages*
 
 Check option "Search by default on pages" when you configure Multisite Global Search Widget.
 
-If you use shortcode `[multisite_search_form]` use `search_on_pages` attribute to search by default on pages. For example: `[multisite_search_form search_on_pages="1"]`.
+If you use shortcode `[multisite_search_form]` use `search_on_pages` attribute to search by default on pages.
+For example: `[multisite_search_form search_on_pages="1"]`.
 Default attribute value is `0`.
 
-= Customizing search form =
+*Customizing search form*
 
-You have to copy the CSS code from the stylesheet in the Multisite Global Search directory, paste it in your own stylesheet and modify it.
+You may copy the CSS code from the stylesheet in the Multisite Global Search directory, paste it in your own stylesheet and modify it.
 
-== Screenshots ==
+** Changelog **
 
-1. Widget configuration.
-2. Vertical Global Search widget.
-3. Horizontal Global Search widget.
-
-== Changelog ==
+= 2.0.0 =
+* Fixed: Compatability with WordPress 4.0
+* Changed: Reorganised codebase to be separated into classes
+* Fixed: all WordPress warnings
+* Removed: due to the codebase reorganisation, all languages except for English have been removed
 
 = 1.2.11 =
 * Added: Serbian language pack

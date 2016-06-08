@@ -1,0 +1,22 @@
+/***************** Widget ********************/
+.ms-global-search_form label + label {
+  margin-left: 1em;
+}
+
+.ms-global-search_form p {
+  margin-bottom: 0.5em;
+}
+
+/***************** Page **********************/
+
+.ms-global-search_term {
+  font-weight: bold;
+}
+
+.entry-content .globalsearch_title {
+  margin-bottom: 0.25em;
+}
+
+.entry-content .globalsearch_meta {
+  font-size: small;
+}
