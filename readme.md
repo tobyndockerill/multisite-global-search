@@ -34,8 +34,6 @@ Currently in the following languages:
 * Receive results from your complete blog network, even sites you do not own or control.
 * Customizable style sheet for widget and results page.
 * Two different form types, vertical and horizontal.
-* Put search form into your code with `MultisiteGlobalSearch::ms_global_search_vertical_form(your_results_page)` or `MultisiteGlobalSearch::ms_global_search_horizontal_form(your_results_page)`
-* Insert search form in templates using the shortcode: `[multisite_search_form]`. [See the plugin page for more information](http://grial.usal.es/agora/pfcgrial/multisite-search).
 
 ## Installation
 
