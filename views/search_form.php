@@ -46,8 +46,8 @@
         <?php endif; ?>
           <label>
             <input title="<?php _e('Search on all blogs', 'ms-global-search'); ?>" type="radio"
-            id="<?php echo $id_base.'_'.$rand ?>" name="mswhere" value="all"
-            <?php echo $search_my ? '' : 'checked="checked"' ?> />
+              id="<?php echo $id_base.'_'.$rand ?>" name="mswhere" value="all"
+              <?php echo $search_my ? '' : 'checked="checked"' ?> />
             <?php _e('All', 'ms-global-search'); ?>
           </label>
           <label>
